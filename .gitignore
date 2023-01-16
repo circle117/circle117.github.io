@@ -18,4 +18,4 @@ vendor
 # npm dependencies
 node_modules
 package-lock.json
-/_posts/config.txt
+/_posts/Front-Matter.txt
