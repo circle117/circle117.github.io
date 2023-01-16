@@ -1,12 +1,12 @@
 ---
-title: 2.The Java Programming Environment
+title: 2 The Java Programming Environment
 date: 2022-08-15 14:38:00 +0800
 categories: [Core Java]
 tags: [java]        # lowercase
-toc: false
+toc: true
 ---
 
-# 2.The Java Programming Environment
+# 2 The Java Programming Environment
 
 ## Install the Java Development Kit
 
