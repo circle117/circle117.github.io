@@ -1,12 +1,10 @@
 ---
 title: 7 Exception, Assertions and Logging
 date: 2022-09-05 15:14:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-# 7 Exception, Assertions and Logging
 
 ## 7.1 Dealing with Errors
 

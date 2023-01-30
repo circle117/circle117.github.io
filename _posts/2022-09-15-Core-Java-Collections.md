@@ -1,12 +1,10 @@
 ---
 title: 9 Collections
 date: 2022-09-15 13:42:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-# 9 Collections
 
 ## 9.1 The Java Collection Framework
 

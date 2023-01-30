@@ -1,12 +1,10 @@
 ---
 title: 4 Objects and Classes
 date: 2022-08-22 16:25:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-# 4 Objects and Classes
 
 ## 4.1 Introduction to Object-Oriented Programming
 

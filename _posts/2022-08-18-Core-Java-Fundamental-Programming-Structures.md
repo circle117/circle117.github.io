@@ -1,12 +1,10 @@
 ---
 title: 3 Fundamental Programming Structures in Java
 date: 2022-08-18 11:37:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-# 3 Fundamental Programming Structures in Java
 
 ## 3.1 A Simple Java Program
 

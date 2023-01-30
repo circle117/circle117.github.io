@@ -1,12 +1,10 @@
 ---
 title: 6 Interfaces, Lambda Expressions and Inner Class
 date: 2022-09-02 15:12:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-# 6 Interfaces, Lambda Expressions and Inner Class
 
 ## 6.1 Interfaces
 
@@ -431,7 +429,7 @@ Pick a functional interface to accept the lambda (like a media)
    ```java
    public interface IntConsumer
    {
-     void accept(int value)
+     void accept(int value);
    }
 
    public static void repeat(int n, IntConsumer, action)

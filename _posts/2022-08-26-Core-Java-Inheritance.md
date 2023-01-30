@@ -1,13 +1,10 @@
 ---
 title: 5 Inheritance
 date: 2022-08-26 11:58:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-
-# 5 Inheritance
 
 ## 5.1 Superclasses and Subclasses
 

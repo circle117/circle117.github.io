@@ -1,13 +1,10 @@
 ---
 title: 1 An Introduction to Java
 date: 2022-08-15 14:35:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]
 toc: true
 ---
-
-
-# 1 An Introduction to Java
 
 ## Java as A Programming Platform
 

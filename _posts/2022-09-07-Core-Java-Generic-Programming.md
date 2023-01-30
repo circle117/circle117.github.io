@@ -1,12 +1,10 @@
 ---
 title: 8 Generic Programming
 date: 2022-09-07 14:16:00 +0800
-categories: [Core Java]
+categories: [Java, Core Java]
 tags: [java]        # lowercase
 toc: true
 ---
-
-# 8 Generic Programming
 
 an expressive type system that allow designers to describe in detail how types of variables and methods should vary
 
