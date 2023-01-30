@@ -286,6 +286,7 @@ Pair<**?** extends Employee>
 * ```java
   void setFirst(? super Manager);				// Manager or sub
   ? super Manager getFirst();						// ERROR
+  ```
 
 * super: write to a generic object
 
@@ -294,6 +295,7 @@ Pair<**?** extends Employee>
 * ```java
   public static <T extends Comparable<T>> Pair<T> minmax(T[] a);
   public static <T extends Comparable<? super T>> Pair<T> minmax(T[] a);
+  ```
 
 ### Unbounded Wildcards
 

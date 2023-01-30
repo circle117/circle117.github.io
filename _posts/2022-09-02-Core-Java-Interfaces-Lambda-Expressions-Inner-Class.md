@@ -66,6 +66,7 @@ Comparable for superclasses and subclasses
 
    ```java
    if (Employee instanceof Comparable){...}
+   ```
 
 3. can **extend** interfaces
 
@@ -271,6 +272,7 @@ Java API defines a number of generic functional interfaces in the java.util.func
 
    ```java
    list.removeIf(e -> e==null);
+   ```
 
 3. Supplier\<T\>
 
@@ -314,6 +316,7 @@ the :: operator
    System.out::println;
 
    x -> System.out.println(x);
+   ```
 
 2. Class::instanceMethod
 
@@ -321,6 +324,7 @@ the :: operator
    String::compareToIgnoreCase;
 
    (x, y) -> x.compareToIgnorecase(y);
+   ```
 
 3. Class::staticMethod
 

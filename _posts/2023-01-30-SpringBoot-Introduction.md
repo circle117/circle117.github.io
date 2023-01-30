@@ -81,7 +81,7 @@ toc: true
    ```java
    @RestController
    public class HelloController {
-   
+
        @RequestMapping("/hello")
        public String hello() {
            return "Hello, Springboot2";
@@ -126,6 +126,7 @@ toc: true
     <properties>
       <mysql.version>xxxxx</mysql.version>
     </properties>
+    ```
 
 * <u>starter场景启动器</u> spring-boot-starter-*
 

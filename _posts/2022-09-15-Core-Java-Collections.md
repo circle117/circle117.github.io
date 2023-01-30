@@ -79,6 +79,7 @@ public interface Iterator<E>
 
 * ```java
   iterator.forEachRemaining(element -> do something with the element);
+  ```
 
 * remove(): remove the element that was returned by the last call to next
 * IllegalStateException: call remove() before next()
@@ -317,6 +318,7 @@ EnumSet: elements that belong to an enumerated type (internally implemented as a
   EnumSet<Weekday> never = EnumSet.noneOf(Weekday.class);
   EnumSet<Weekday> workday = EnumSet.range(Weekday.MONDAY, Weekday.FRIDAY);
   EnumSet<Weekday> mwf = EnumSet.of(Weekday.MONDAY, Weekday.WEDNESDAY, Weekday.FRIDAY);
+  ```
 
 * usual methods of the Set interface
 
@@ -324,6 +326,7 @@ EnumMap: keys belong to an enumerated type
 
 * ```java
   var personInCharge = new EnumMap<Weekday, Employee>(Weekday.class);
+  ```
 
 ### Identity Hash Map
 
@@ -388,6 +391,7 @@ List<Employee> group2 = staff.subList(10, 20); 		// inclusive, exclusive
   SortedSet<E> subSet(E from, E to);
   SortedSet<E> headSet(E to);
   SortedSet<E> tailSet(E from);
+  ```
 
 * from: >=
 * to: <
@@ -406,6 +410,7 @@ List<Employee> group2 = staff.subList(10, 20); 		// inclusive, exclusive
   NavigableSet<E> subSet(E from, boolean fromInclusive, E to, boolean toInclusive);
   NavigableSet<E> headSet(E to, boolean toInclusive);
   NavigableSet<E> tailSet(E from, boolean fromInclusive);
+  ```
 
 ### Unmodified Views
 
@@ -458,6 +463,7 @@ rawList.add(new Date());
 
   ```java
   List<String> safeStrings = Collections.checkedList(strings, String.class);
+  ```
 
 ## 9.6 Algorithm
 

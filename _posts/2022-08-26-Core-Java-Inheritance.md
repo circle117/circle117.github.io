@@ -213,6 +213,7 @@ steps for writing a **equals** method
 
    ```java
    ClassName other == (ClassName)otherObject;
+   ```
 
 6. Compare the **fields**
    - == (primitives)
@@ -250,11 +251,13 @@ For superclass
 
 * ```java
   return getClass.getName()+"[name="+name+...;
+  ```
 
 For subclass
 
 * ```java
   return super.toString()+...
+  ```
 
 Called when concatenated by + with a string
 
