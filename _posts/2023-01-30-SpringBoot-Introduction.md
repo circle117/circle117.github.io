@@ -146,3 +146,173 @@ toc: true
   * scanBasePackages参数设置默认包路径
 * 配置有默认值：默认配置最终会映射到MultipartProperties，配置文件的值会绑定到每个类上（类在容器中创建）
 * 按需加载所有自动配置项
+
+## 底层注解
+
+### @Configuration
+
+```java
+@Configuartion
+public class ClassA {
+  
+  @Bean
+  public User user1() {
+    return new User();
+  }
+}
+```
+
+* @Configuration：配置类（=配置文件）
+
+  * 配置类本身也是组件
+
+* @Bean：给容器中添加组件，默认单实例
+
+  * 返回类型 -> 组件类型
+  * 方法名 -> id *或* @Bean("id")
+  * 返回值 -> 实例
+
+* proxyBeanMethods（代理bean的方法）参数值默认为true
+
+  * 现象：外部对配置类中的组件方法调用多少次获取的都是注册容器中的单实例对象
+
+  * 原因：参数为true
+
+    ```java
+    ConfigurableApplicationContext run = SpringApplication.run(MainApplication.class, args);
+    MyConfig config = run.getBean(MyConfig.class);
+    
+    // user与user2指向同一个对象
+    User user = config.user1();
+    User user2 = config.user1();
+    ```
+
+    获取到的是MyConfig的代理对象，使用代理对象调用方法，检查容器中是否有该方法返回的组件（保持单实例）
+
+    若为false，则指向不同对象
+
+  * 解决组件依赖：一个组件创建时会调用另一个组件
+
+    * 若参数为true，则调用的是容器中的组件
+    * 若参数为false，则再创建一个新的调用
+
+  * 若有组件依赖，proxyBeanMethods = true；否则，proxyBeanMethods = false以加速容器启动过程，减少判断
+
+### @Bean, @Component, @Controller, @Service, @Repository
+
+### @ComponentScan
+
+### @Import
+
+给容器中导入指定类型的组件，自动调用其无参构造，默认组件名字为全类名（可以标在任何组件类上）
+
+### @Conditional
+
+条件装配：满足特定的条件，则进行组件注入（可以标在方法上或类上）
+
+@ConditionalOnBean
+
+* 条件定义在前
+
+* ```java
+  @ConditionalOnBean(name="user2")
+  @Bean
+  public User user1() {
+      return new User("joy", 18);
+  }
+  ```
+
+@ConditionalOnMissingBean
+
+@ConditionalOnClass
+
+...
+
+### @ImportResource
+
+导入使用xml配置的bean
+
+```java
+@Configuration
+@ImportResource("classpath: beans.xml")
+public Class MyConfig {}
+```
+
+### 配置绑定
+
+读取properties文件中的内容，封装到Java bean中
+
+#### @Component + @ConfigurationProperties
+
+```java
+@Component
+@ConfigurationProperties(prefix="myuser")
+public Class User {}
+```
+
+#### @EnableConfigurationProperties + @ConfigurationProperties
+
+1. 开启配置绑定功能
+2. 自动注入到容器中
+
+```java
+@Configuration
+@EnableConfigurationProperties(User.class)
+public Class MyConfig {}
+
+@ConfigurationProperties(prefix="myuser")
+public Class User {}
+```
+
+## 自动配置原理
+
+@SpringBootApplication 主要由以下三个组成
+
+1. @SpringBootConfiguration
+2. @EnbaleAutoConfiguration
+3. @ComponentScan
+
+### @SpringBootConfiguration
+
+代表当前是一个配置类
+
+### @EnableAutoConfiguration
+
+```java
+@AutoConfigurationPackage
+@Import({AutoConfigurationImportSelector.class})
+public @interface EnableAutoConfiguration {}
+```
+
+@AutoConfigurationPackage
+
+* ```java
+	@Import({AutoConfigurationPackages.Registrar.class})
+	public @interface AutoConfigurationPackage {}
+	```
+
+* 利用Registrar给容器中批量<u>导入组件</u>（指定包下的所有组件，MainApplication所在包下）
+
+@Import({AutoConfigurationImportSelector.class})
+
+* 给容器中批量导入组件
+* 默认扫描当前系统内所有META-INF/spring.factories位置的文件，文件中规定了Spring Boot已启动就要加载的组件（共127个）
+* 按照条件装配规则，按需配置
+
+### @ComponentScan
+
+指定扫描哪些包，是Spring注解
+
+### 修改默认配置
+
+（对于使用@Bean标签标注的方法传入的对象参数，参数会从容器中找对应的参数类型）
+
+自动配置了DispatcherServlet、HttpEncoding
+
+1. SpringBoot先加载所有的自动配置类
+2. 每个自动配置类按照条件进行生效，默认绑定配置文件xxxxProperties制定的值
+3. 生效的配置类就会给容器装配组件
+4. 只要容器中有这些组件，就有对应的功能
+5. 若用户自己配置，以用户为先
+   - 用户自己@Bean替换底层组件
+   - 在application.properties修改对应配置名字的值
