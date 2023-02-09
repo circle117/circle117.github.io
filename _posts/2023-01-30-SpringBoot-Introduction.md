@@ -116,7 +116,7 @@ toc: true
 
 依赖管理
 
-* <u>父项目 (parent) 依赖管理</u>：声明了很多常用的依赖的版本号
+* <u>父项目 (parent) 依赖管理</u>：声明了很多常用的依赖的版本号（对应spring-boot-starter-parent）
 
   * 只需要添加依赖，不用写版本号
 
@@ -143,7 +143,7 @@ toc: true
 * 自动配好Tomcat：引入并配置
 * 自动配好SpringMVC：配置好所有web开发常见场景
 * 默认的包结构：主程序所在包及其所有子包里面的组件会被默认扫描
-  * scanBasePackages参数设置默认包路径
+  * @SpringBootApplication的scanBasePackages参数设置默认包路径
 * 配置有默认值：默认配置最终会映射到MultipartProperties，配置文件的值会绑定到每个类上（类在容器中创建）
 * 按需加载所有自动配置项
 
@@ -172,7 +172,7 @@ public class ClassA {
   * 方法名 -> id *或* @Bean("id")
   * 返回值 -> 实例
 
-* proxyBeanMethods（代理bean的方法）参数值默认为true
+* @Configuration的proxyBeanMethods（代理bean的方法）参数值默认为true
 
   * 现象：外部对配置类中的组件方法调用多少次获取的都是注册容器中的单实例对象
 
@@ -310,9 +310,73 @@ public @interface EnableAutoConfiguration {}
 自动配置了DispatcherServlet、HttpEncoding
 
 1. SpringBoot先加载所有的自动配置类
-2. 每个自动配置类按照条件进行生效，默认绑定配置文件xxxxProperties制定的值
+2. 每个自动配置类按照条件进行生效，默认绑定配置文件xxxxProperties指定的值
 3. 生效的配置类就会给容器装配组件
 4. 只要容器中有这些组件，就有对应的功能
 5. 若用户自己配置，以用户为先
    - 用户自己@Bean替换底层组件
    - 在application.properties修改对应配置名字的值
+
+## 实践
+
+1. 引入场景依赖
+2. （查看SpringBoot自动配置了哪些）
+3. 是否需要修改
+   * 参照配置文件
+   * 自己添加组件@Bean
+
+## 开发技巧
+
+### Lombok
+
+简化Java bean的构造器、getter、setter、toString等
+
+1. 引入Lombok依赖
+
+   ```xml
+   <dependency>
+     <groupId>org.projectlombok</groupId>
+     <artifactId>lombok</artifactId>
+   </dependency>
+   ```
+
+2. 搜索安装lombok插件（setting -> plugin -> market）
+
+3. @Data：getter, setter
+
+   ```java
+   @Data
+   public class User {}
+   ```
+
+   @ToString
+
+   @NoArgsConstructor
+
+   @AllArgsConstructor
+
+   （若需要定制构造函数，则需要自己写）
+
+   @EqualsAndHashCode
+
+   @Slf4j：日志（注释在Controller上）
+
+### dev-tools
+
+自动重启
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+```
+
+### Spring Initializer
+
+快速创建Spring应用
+
+* ./resources/static/：静态资源（css, js）
+
+  ./resources/templates/：页面
+
