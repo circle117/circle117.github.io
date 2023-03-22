@@ -4,6 +4,7 @@ date: 2023-03-07 16:43:00 +0800
 categories: [Basic, Computer Network]
 tags: [basic]        # lowercase
 toc: true
+math: true
 ---
 
 ## 3.1 Introduction
