@@ -1,5 +1,5 @@
 ---
-title: 4 The Network Layer: the Data Plane
+title: 4 The Network Layer - the Data Plane
 date: 2023-05-09 14:17:00 +0800
 categories: [Basic, Computer Network]
 tags: [basic]        # lowercase
