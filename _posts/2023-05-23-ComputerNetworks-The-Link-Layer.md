@@ -14,7 +14,7 @@ math: true
 understand <u>principles</u> behind link layer services
 
 * error detection, correction
-* sharing a broadcast channel: multiple access
+* multiple access (sharing a broadcast channel)
 * link layer addressing
 
 <u>practice</u>: instantiation, implementation of various link layer technologies
@@ -26,22 +26,22 @@ understand <u>principles</u> behind link layer services
 
 ### terminology
 
-**Link layer** has responsibility of transferring datagram from one node to **physically adjacent** node over a link
+**Link layer** has responsibility of transferring datagram from one node to <u>physically adjacent</u> node over a link
 
-* hosts, routers: <u>nodes</u>
+* hosts, routers: **nodes**
 
-* communication channels that **directly** connect **physically adjacent** nodes: <u>links</u>
+* communication channels that <u>directly</u> connect <u>physically adjacent</u> nodes: **links**
 
   * wired, wireless
   * LANs
 
   * How are interfaces actually connected
 
-    * wired Ethernet interfaces connected by Ethernet switches
+    * wired <u>Ethernet</u> interfaces connected by Ethernet switches
 
-    * wireless WiFi interfaces connected by WiFi base station
+    * wireless <u>WiFi</u> interfaces connected by WiFi base station
 
-* layer-2 packet: <u>frame</u>, encapsulates datagram
+* layer-2 packet: **frame** (encapsulates datagram)
 
 ### context
 
@@ -106,19 +106,20 @@ receiving side
 
 ## 6.2 Error-Detection and -Correction Techniques
 
+allows the receiver to <u>sometimes</u> (not always) detect that bit errors have occurred
+
 ### Simple Parity Checking
 
-sender: **single bit parity**
+**single-bit parity**
 
 * detect single bit errors
-* <u>Even parity</u>: set parity bit so there is an even number of 1's
+* <u>sender</u>: set parity bit so there is an even number of 1's (<u>even parity</u>)
 
-receiver
+* <u>receiver</u>: compute parity of d+1 received bits, if not even, then error detected
 
-* compute parity of d+1 received bits, if not even, then error detected
 * can detect <u>odd</u> number of bit flips
 
-two-d parity
+**two-d parity**
 
 * row parity
 * column parity
@@ -128,20 +129,20 @@ two-d parity
 
 ### Internet Checksum
 
-goal: detect errors in transmitted segment
+goal: detect errors in transmitted segment (in the transport layer)
 
 sender
 
 * treat contents of UDP segment as sequence of 16-bit integers
-* <u>checksum</u>: addition of segment content
+* checksum: <u>addition</u> of segment content and get 1s <u>complement</u>
 * checksum value put into UDP checksum field
 
 receiver
 
-* compute checksum of received segment
-* check if computed checksum equals checksum field value
-  * not equal - error detected
-  * equal - no error detected. But maybe errors nonetheless?
+* compute the 1s complement of the sum of the received data
+* check if it is all 1 bits
+  * 0 exists - error detected
+  * no 0 - no error detected. But maybe errors nonetheless?
 
 ### Cyclic Redundancy Check (CRC)
 
@@ -149,11 +150,11 @@ CRC
 
 * more powerful error-detection coding
 
-* D: data bits (given, think of these as a binary number)
+* **D**: data bits (given, think of these as a binary number)
 
-* G: bit pattern (generator), of r+1 bits (given, specified in CRC standard)
+* **G**: bit pattern (generator), of r+1 bits (given, specified in CRC standard)
 
-* R: r CRC bits
+* **R**: r CRC bits
 
 * bits to send: D+R
 
@@ -165,7 +166,7 @@ CRC
 
 sender: compute r CRC bits, R, such that <D,R> exactly divisible by G
 
-* receiver knows G, divides <D, R> by G. if non-zero remainder: error detected
+* receiver knows G, divides <D, R> by G. if <u>non-zero remainder</u>: error detected
 * can detect all burst error less than r+1 bits
 * widely used in practice (Ethernet, 802.11 WiFi)
 
@@ -177,8 +178,8 @@ two types of links
 
 * <u>point-to-point</u>
   * point-to-point link between Ethernet switch, host
-  * PPP for dial-up access
-* **<u>broadcast</u>** (shared wire or medium)
+  * Point-to-Point Protocol (PPP), High-level Data Link Control (HDLC)
+* <u>broadcast</u> (shared wire or medium)
   * old-school Ethernet
   * upstream HFC in cable-based access network
   * 802.11 wireless LAN, 4G/5G, satellite
@@ -240,11 +241,11 @@ random access protocols
 * 2+ sending nodes: collisions
 * random access protocols specifies
   * when to send
-  *  how to detect collisions
-  * how to recover from collisions (e.g. via delayed retransmissions)
+  *  how to <u>detect</u> collisions
+  * how to <u>recover</u> from collisions (e.g. via delayed retransmissions)
 * examples
   * ALOHA
-  * CSMA, CSMA/CD, CSMA/CA
+  * CSMA, CSMA/CD
 
 Slotted ALOHA
 
@@ -328,13 +329,13 @@ random access MAC protocols
 
 **polling**
 
-* centralized controller uses polling messages to invite client nodes to transmit in turn
+* centralized controller (master node) uses polling messages to invite client nodes to transmit in turn (polling delay)
 * protocol needed for client devices to join/leave network
 * Bluetooth uses polling
 
 **token passing**
 
-* control token message explicitly passed from one node to next, sequencially
+* control token message explicitly passed from one node to next in an fixed order (no master node)
   * transmit while holding token
 
 ##  6.4 Switched Local Area Networks
@@ -437,7 +438,7 @@ function: receive incoming link-layer frames and forward them into outgoing link
 How switch filtering and forwarding work
 
 * <u>no entry</u>: broadcast the frame
-* <u>an entry associating the destination MAC address with the coming interface</u>: discard
+* <u>an entry associating the destination MAC address with the coming interface</u>: discard (from a LAN containing the destination)
 * <u>an entry associating the destination MAC address with the other interface</u>: forward
 
 #### Self-learning
@@ -461,7 +462,7 @@ features and properties
 * **Heterogeneous links**: different links can operate different speeds and run over different media
 * **Management**: ease network management, gather statistics
 
-#### Switched Versus Routers
+#### Switches Versus Routers
 
 Both switches and routers are candidates for interconnection devices.
 
@@ -498,17 +499,28 @@ Larger networks (thousands of hosts): routers
 
 can be handled by a switch that supports **virtual local area networks (VLANs)**
 
-* allows <u>multiple virtual</u> local area networks to be defined over <u>a single physical</u> local area network infrastructure
-* a network manager
+* allows <u>multiple</u> virtual local area networks to be defined over <u>a single physical</u> local area network infrastructure
+* a <u>network manager</u>
   * divides the ports into groups
   * reconfigure the VLAN software to manage users
-* traffic between different VLANs of the same physical switch
+
+traffic between
+
+* different <u>VLANs</u> in the same physical switch
+
   * connect a VLAN switch port to an <u>external router</u> (a device that has both a VLAN switch and a router)
-  * configure the port to belong both VLANs
 
-**VLAN trunking**: interconnect two VLAN switches
+  * configure the port to belong to both VLANs
 
-* a 4-byte **VLAN tag** used for identifying the VLAN
+* different VLAN <u>switches</u>
+
+  1. define a port belonging to the A VLAN on each switch
+
+  2. **VLAN trunking**
+
+     * configure a special port as the <u>trunk port</u> which belongs to all VLANs
+
+     * a 4-byte **VLAN tag** used for identifying the VLAN to which the frame belongs to
 
 VLAN
 
@@ -548,7 +560,7 @@ a data center
   * serve content, store e-mails and documents and perform massively distributed computations
   * stacked in racks, with each rack having 20 to 40 **blades** (hosts)
   * **Top of Rack (TOR) switch**
-    * at the top of the tack
+    * at the top of the rack
     * interconnect the hosts in the rack with each other and with other switches in the data center
 * **border routers**
   * handle flows between <u>external clients</u> and <u>internal hosts</u>
