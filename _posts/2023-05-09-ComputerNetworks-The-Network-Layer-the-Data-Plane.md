@@ -1,7 +1,7 @@
 ---
 title: 4 The Network Layer - the Data Plane
 date: 2023-05-09 14:17:00 +0800
-categories: [Basic, Computer Network]
+categories: [Basic, Computer Networking A Top-Down Approach]
 tags: [basic]        # lowercase
 toc: true
 math: true
@@ -240,7 +240,7 @@ example
 
 #### CIDR
 
-**CIDR**: Classless InternetDomain Routing
+**CIDR**: Classless Internet Domain Routing
 
 * subnet portion of address of arbitrary length
 * address format: <u>a.b.c.d/x</u>, where x is # bits in subnet portion of address

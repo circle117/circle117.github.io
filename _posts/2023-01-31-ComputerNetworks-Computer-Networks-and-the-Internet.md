@@ -1,46 +1,53 @@
 ---
 title: 1 Computer Networks and the Internet
 date: 2023-01-31 15:06:00 +0800
-categories: [Basic, Computer Network]
+categories: [Basic, Computer Networking A Top-Down Approach]
 tags: [basic]        # lowercase
 toc: true
 ---
 
 ## 1.1 What is the Internet & What is Protocols
 
-### The Internet: a nuts-and-bolts view
+### The Internet: a Nuts-and-bolts View
 
 **Network Edge**: Billions of connected computing devices
 
-* **hosts**/end systems: clients and servers
+* **hosts**/**end systems**: clients and servers
 * run network apps
 * servers often in the data center
 
 **Packet switches**
 
 * forward packets (chunks of data)
-* two types: routers, switches
+* two types: **routers**, **switches**
 
-**Access networks, physical media**
+* **access networks** (physical media)
 
-* wired, wireless communication links: fiber, copper, radio, satellite
+  * wired, wireless **communication links**: fiber, copper, radio, satellite
 
-* transmission rate: bandwidth
 
-**Network core**
+  * **transmission rate**: bandwidth
 
-* interconnected routers
-* **Internet: "network of networks"**
-* managed by an organization
 
-**Protocols** are everywhere
+* **Network core**
+
+  * interconnected **routers**
+
+  * <u>Internet: "network of networks"</u>
+
+  * Internet Service Providers (**ISPs**)
+
+
+**Protocols** are everywhere (e.g. TCP & IP)
 
 * control sending and receiving of messages
-* Internet standards
+* Internet standards: requests for comments (**RFCs**)
 
-### The Internet: a "service"‘s view
+### The Internet: a "Service"‘s View
 
 **Infrastructure** that provides services to applications
+
+* End systems use a **socket** interface to communicate with each other
 
 ### Protocols
 
@@ -48,13 +55,13 @@ Human protocols
 
 * example: Request & Reply; multi-step questions & answers
 
-* rules: specific messages sent, specific actions taken when message received
+* rules: specific <u>messages</u> sent, specific <u>actions</u> taken when message received
 
 Network protocols
 
-Protocols define the **format**, **order** of **messages sent and received** among network entities, and **actions** taken on msg transmission, receipt
+* Protocols define the <u>format</u>, <u>order of messages sent and received</u> among network entities, and <u>actions</u> taken on msg transmission, receipt
 
-## 1.2 The Network edge
+## 1.2 The Network Edge
 
 ### Access Networks
 
@@ -69,57 +76,45 @@ connect end systems to edge router (3 types)
 * <u>transmission rate</u> (bit per second) of access network
 * <u>shared</u> or <u>dedicated</u> access among users
 
-#### cable-based access
+#### Home Access (Residential)
 
-(homes) cable modem - cable - cable headend - Internet Service Provider (ISP)
+**Cable**: (homes) cable modem - cable - cable headend - Internet Service Provider (ISP)
 
 * **frequency division multiplexing (FDM)**: different channels transmitted in different frequency bands
 
-* HFC: hybrid fiber coax
-  * asymmetric
-    * downstream transmission rate: 40Mbps - 1.2Gbs
-    * upstream transmission rate: 30 - 100Mbps
+* **HFC**: hybrid fiber coax (asymmetric)
+  * downstream transmission rate: 40Mbps - 1.2Gbs
+  * upstream transmission rate: 30 - 100Mbps
 * network of cable, fiber attaches homes to ISP router
-  * home **shares access network** to cable headend
+  * home **shares** access network to cable headend
 
-#### Digital Subscriber Line (DSL)
+**Digital Subscriber Line (DSL)**: (home) DSL modem - DSLAM (central office) - Internet/telephone network
 
-(home) DSL modem - central office (DSLAM) - ISP
+* use existing <u>telephone line</u> to exchange data with a <u>digital subscriber line access multiplexer (DSLAM)</u>
 
-* use existing telephone line to central office (DSLAM)
-* dedicated downstream transmission rate: 24-52Mbps
-* dedicated upstream transmission rate: 3.5-16Mbps
+* dedicated downstream transmission rate: 24-52Mbps (asymmetric)
 
-#### Home networks
+  dedicated upstream transmission rate: 3.5-16Mbps
 
-headend/central office - cable or DSL modem - router, firewall, NAT - 
+  ordinary two-way telephone channel
 
-* wired Ethernet
-* WiFi wireless access point
-* wireless and wired devices
+* telephone call and Internet connection **share** the link
 
-#### Wireless Access Networks
+#### Enterprise (and the Home) Access (Institutional)
 
- shared wireless access network connects end systems to router
+**Ethernet**: hosts - Ethernet switch - institutional router - ISP
+
+**Wireless Local Area Networks (WLANs)**:  shared wireless access network connects end systems to router
 
 * via base station (access point)
+* base station - router - cable modem - ISP
 
-Wireless Local Area Networks (WLANs)
+#### Mobile Access
 
-* typically within or around building
-
-Wide-area cellular access networks
+**Wide-area Wireless Access**
 
 * provided by mobile, cellular network operator (10 km)
 * 4G/5G cellular
-
-#### Enterprise networks
-
-companies, universities, etc
-
-mixed of wired, wireless link technologies, connecting a mix of switches and routers
-
-#### Data center networks
 
 ### Packets of data
 
@@ -153,7 +148,7 @@ host sending function
 
 ## 1.3 The Network Core
 
-mesh of interconnected routers
+mesh of interconnected <u>routers</u>
 
 **Packet-switching**: hosts break application-layer messages into **packets**
 
@@ -164,7 +159,7 @@ mesh of interconnected routers
 **Forwarding** (aka switching)
 
 * <u>local</u> action: move arriving packets from router's input link to appropriate router output link
-* controlled by local forwarding table based on destination address in arriving packet's header
+* controlled by local forwarding table based on <u>destination address</u> in arriving packet's header
 
 **Routing**
 
@@ -184,7 +179,7 @@ mesh of interconnected routers
 * packets will <u>queue</u>, waiting to be transmitted on output link
 * packets can be <u>dropped(lost)</u>, if memory(buffer) in router fills up
 
-### Circuit-witching (Alternative to packet-switching)
+### Circuit-switching (Alternative to packet-switching)
 
 end-end resources allocated to, reserved for "call" between source and destination (queuing never occurs)
 
@@ -195,15 +190,22 @@ end-end resources allocated to, reserved for "call" between source and destinati
 FDM and TDM
 
 * **Frequency Division multiplexing (FDM)**
-  * divided into narrow frequency bands
+  * divided into <u>narrow frequency bands</u>
   * each call allocated its own band, can transmit at max rate of that narrow band
 * **Time Division Multiplexing (TDM)**
-  * time divided into slots
+  * time divided into <u>slots</u>
   * each call allocated periodic slot(s), can transmit at maximum rate of (wider) frequency band during its time slot
 
 ### Packet-switching Versus Circuit-switching
 
 packet-switching is great for "bursty data"
+
+packet-switching
+
+* cons: not suitable for real-time services
+* pros
+  * better sharing
+  * simpler, more efficient, and less costly
 
 **excessive congesting possible**: packet delay and loss due to buffer overflow
 
@@ -211,20 +213,20 @@ packet-switching is great for "bursty data"
 
 ### Internet Structure: a "Network of Networks"
 
-connect millions of access network
+Network Structure 1: one <u>global transit ISPs</u>
 
-* global transit ISPs
+Network Structure 2: multiple global transit ISPs
 
-At center: small of well-connected large networks
+Network Structure 5 (Any ISP may choose to **multi-home**)
 
 * "tier 1" commercial ISPs
 * content provider networks (Google, Facebook)
 
 * **Internet Exchange Point (IXP)**
 * regional ISP
-* access ISP
+* access ISP: cable, FTTH, Wi-Fi and cellular
 
-## 1.4 Network Performance: delay, loss, throughput
+## 1.4 Network Performance: Delay, Loss, Throughput
 
 How do packet delay and loss occur?
 
@@ -243,19 +245,19 @@ $$
 d_{nodal} = d_{proc}+d_{queue}+d_{trans}+d_{prop}
 $$
 
-* d_{proc}: processing delay
+* d_{proc}: <u>processing</u> delay
 
   * check bit errors
   * determine output link
   * typically < microsecs
 
-* d_{queue}: queueing delay
+* d_{queue}: <u>queueing</u> delay
 
   * time waiting at output link for transmission
 
   * depends on congestion level of router
 
-  * traffic intensity
+  * **traffic intensity**
 
     * a: average packet arrival delay
 
@@ -272,14 +274,16 @@ $$
       ->1: large
 
       \> 1: infinite
+      
+      no greater than 1
 
-* d_{trans}: transmission delay
+* d_{trans}: <u>transmission</u> delay
 
   * L: packet length (bits)
   * R: link transmission rate (bps)
   * d_{trans} = L/R
 
-* d_{prop}: propagation delay
+* d_{prop}: <u>propagation</u> delay
 
   * d: length of physical link
   * s: propagation speed
@@ -309,27 +313,27 @@ lost packet may be retransmitted by previous node, by source end system, or not 
 * **instantaneous**: rate at given point in time
 * **average**: rate over longer period of time
 
-Rs for link one, and Rc for link two, average end-end throughput
+Rs for the link between the server and the router, and Rc for the link between the client and the router, average end-end throughput
 
-* Rs < Rc, Rs
-* Rs > Rc, Rc
+* Rs < Rc, the throughput is Rs
+* Rs > Rc, the throughput isRc
 * **bottleneck link**: thinner one
 
 ### Throughput: Network Scenario
 
 10 connections share backbone link R bits/sec
 
-* per-connection end-end throughput: min(Rs, Rc, R/10)
+* per-connection end-end throughput: <u>min</u>(Rs, Rc, R/10)
 
 * in practice: Rc or Rs is smaller than R/N, bottleneck link is <u>at network edge</u>
 
-## 1.5 Layering, Encapsulation, Service models
+## 1.5 Layering, Encapsulation, Service Models
 
 an example of airline systems
 
 ### Architectural Layering
 
-**layers**: each layer implements a service
+**layers**: each layer implements a <u>service</u>
 
 * via its own internal-layer actions
 * relying on services provided by layer below
@@ -338,39 +342,61 @@ Why Layering?
 
 * Explicit structure allows identification, relationship of system's pieces
 * modularization eases maintenance, updating of system
-  * change in layer's service implementation transparent to rest of system (doesn't affect rest of the system)
+  * change in layer's service implementation <u>transparent</u> to rest of system (doesn't affect rest of the system)
 
 ### Internet Layers
 
-**application**: supporting network application
+Five-layer Internet protocol stack
 
-* HTTP, IMAP, SMAP, DNS
-* exchanges <u>messages</u> to implement some application service using services of transport layer
-* M
+1. **application**: supporting network application (software)
 
-**transport**: process-process data transfer
+   * HTTP, IMAP, SMAP, DNS
 
-* TCP, UDP
-* transfers M from one process to another, using services of network
-* H_t M: **encapsulates** application-layer message, M, with transport layer-layer head H_t to create a transport-layer **segment**
+   * exchanges messages to implement some application service using services of transport layer
 
-**network**: routing of datagrams from source to destination
+   * application-layer **message** M
 
-* IP, routing protocols
-* transfers transport-layer segment from one host to another, using link layer services
-* H_n H_t M: **encapsulates** transport-layer segment with network layer-layer head H_n to create a network-layer **datagram**
 
-**link**: data transfer between neighboring network elements
+2. **transport**: processing data transfer (software)
 
-* Ethernet, WiFi, PPP
-* transfers datagram from host to neighboring host, using network-layer services
-* H_l H_n H_t M: **encapsulates** network datagram with link-layer header H_l to create a link layer **frame**
+   * TCP, UDP
 
-**physical**: hits on the wire
+   * transfers M from one process to another, using services of network
 
-### Encapsulation
+   * H_t M: **encapsulates** application-layer message, M, with transport-layer header H_t to create a transport-layer **segment**
 
-Switches only implement the lower layers of the protocol stack
+
+3. **network**: routing of datagrams from source to destination (software and hardware)
+
+   * IP, routing protocols
+
+   * transfers transport-layer segment from one host to another, using link layer services
+
+   * H_n H_t M: **encapsulates** transport-layer segment with network-layer header H_n to create a network-layer **datagram**
+
+
+4. **link**: data transfer between neighboring network elements (hardware)
+
+   * Ethernet, WiFi, PPP
+
+   * transfers datagram from host to neighboring host, using network-layer services
+
+   * H_l H_n H_t M: **encapsulates** network datagram with link-layer header H_l to create a link layer **frame**
+
+
+5. **physical**: hits on the wire (hardware)
+
+Seven-layer **Open Systems Interconnection (OSI) model**
+
+1. application layer
+2. <u>presentation layer</u>
+3. <u>session layer</u>
+4. transport layer
+5. network layer
+6. data link layer
+7. physical layer
+
+Switches and routers only implement the <u>lower layers</u> of the protocol stack
 
 * (network)
 * link
