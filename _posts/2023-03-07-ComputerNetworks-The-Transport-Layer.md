@@ -1,7 +1,7 @@
 ---
 title: 3 The Transport Layer
 date: 2023-03-07 16:43:00 +0800
-categories: [Basic, Computer Network]
+categories: [Basic, Computer Networking A Top-Down Approach]
 tags: [basic]        # lowercase
 toc: true
 math: true
@@ -18,14 +18,14 @@ principles
 
 internet transport layer protocols
 
-* **UDP**: connectionless, best-effort service
+* **UDP**: connectionless
 * **TCP**: reliable, flow- and congestion-controlled connection-oriented transport
 
 transport vs. network layer services and protocols
 
 * **network layer**: logical communication between <u>hosts</u>
 * **transport layer**: logical communication between <u>processes</u>
-  * rely on, enhance network layer services
+  * <u>rely on</u>, <u>enhance</u> network layer services
 
 Two principle Internet transport protocols
 
@@ -36,9 +36,13 @@ Two principle Internet transport protocols
   * connection setup
 * **UDP**: User Datagram Protocol
   * unreliable, unordered delivery
-* services not available
-  * delay guarantees
-  * bandwidth guarantees
+* services both available
+  * error checking
+  * process-to-process data delivery
+  
+* services <u>not available</u>
+  * <u>delay</u> guarantees
+  * <u>bandwidth</u> guarantees
 
 ## 3.2 Multiplexing and Demultiplexing
 
@@ -46,47 +50,56 @@ Two principle Internet transport protocols
 
 <u>demultiplexing at receiver</u>: use header info to deliver received segments to correct sockets
 
-### How Demultiplexing Work
+how demultiplexing work
 
-hosts received IP datagrams
+* hosts received IP datagrams
+  * source IP address, destination IP address, transport-layer segment(including source, destination port number)
 
-* source IP address, destination IP address, transport-layer segment(including source, destination port number)
 
-host uses <u>IP addresses & port numbers</u> to direct segment to appropriate socket
+* host uses <u>IP addresses & destination port numbers</u> to direct segment to appropriate socket
 
-**Connectionless demultiplexing**
+### Connectionless Multiplexing and Demultiplexing
 
-* when creating socket, must specify <u>host-local</u> port
+when a UDP socket is created
 
-* when creating datagram to send into UDP socket, must specify <u>destination IP address & port</u>
+* the transport layer <u>automatically assigns</u> a port number to the socket
+* or we can <u>associate</u> a specific port number to the socket.
 
-* when receiving host receives UDP segment
+steps
 
-  * check <u>destination port</u> in segment
-  * directs UDP segment to socket with that port
+1. Host A <u>creates a transport-layer segment</u> that includes
+   * the application data
+   * the source port number (return address)
+   * the destination port number
+   * two other values
+2. the network layer of the Host A encapsulates the segment in an <u>IP datagram</u>
+3. Host B <u>examines the destination port number</u> and delivers the segment to its socket
+   * demultiplexing is only based on the destination port number
 
-* same destination port but different source IP addresses and port numbers will be directed to <u>same socket</u> at receiving host
+UDP socket is fully identified by a <u>2-tuple</u>
 
-  demultiplexing is only based on the destination port
+* destination IP address
+* destination port number
 
-**Connection-oriented demultiplexing**
+### Connection-oriented Multiplexing and Demultiplexing
 
-* TCP socket identified by <u>4-tuple</u>
-  * source IP address
-  * source port number
-  * dest IP address
-  * dest port number
-* demultiplexing: receiver uses <u>all four values</u> to direct segment to appropriate socket
-* server may support many <u>simultaneous</u> TCP sockets
-  * identified by its own 4-tuple
-  * associated with a different connecting client
-* If HTTP is used, the destination port is 80. The source IP and port number are used for demultiplexing
+TCP socket is identified by a <u>4-tuple</u>
+* source IP address
+* source port number
+* destination IP address
+* destination port number
 
-**Multiplexing and demultiplexing happen at all layers**
+demultiplexing: receiver uses <u>all four values</u> to direct segment to appropriate socket
+
+server may support many <u>simultaneous</u> TCP sockets
+
+> Web servers often uses only one process, and create a  new thread with a new connection socket for each new client connection
 
 ## 3.3 Connectionless Transport: UDP
 
-"No frills", "bare bones", "best effort" Internet transport protocol
+"No frills", "bare bones" Internet transport protocol
+
+* only multiplexing/demultiplexing function and some light error checking
 
 UDP segments may be: <u>lost</u>, delivered <u>out-of-order</u>
 
@@ -97,31 +110,31 @@ connectionless
 
 Why is there a UDP
 
-* no connection establishment (no RTT delay)
-* simple: no connection state
-* small header size
-* no congestion control
+* **no connection establishment**: does not introduce any delay to establish a connection
+* **no connection state**: support many more active clients
+* **small header size**
+* **no congestion control**
 
 UDP use
 
-* streaming multimedia apps
-* DNS
-* SNMP
-* HTTP/3
+* <u>DNS</u> (avoid connection-establishment delays)
+* <u>SNMP</u> (network management)
+* <u>multimedia applications</u> (both TCP and UDP)
+* <u>QUIC protocol</u> (Quick UDP Internet Connection)
 
 if reliable transfer needed over UDP
 
 * add needed reliability at application layer
 * add congestion control at application layer
 
-### UDP sender/receiver actions
+### UDP Sender/Receiver Actions
 
 UDP sender actions
 
-* passed an application-layer message (e.g. SNMP message)
-* determines UDP segment <u>header</u> fields value
-* <u>creates</u> UDP segment
-* <u>passes</u> segment to network layer (IP)
+* <u>passes</u> an application-layer message (e.g. SNMP message)
+* determines UDP segment <u>header fields value</u>
+* creates UDP <u>segment</u>
+* <u>passes</u> segment to network layer
 
 UDP receiver actions
 
@@ -130,88 +143,89 @@ UDP receiver actions
 * <u>extracts</u> application-layer message
 * <u>demultiplexes</u> message up to application via socket
 
-### UDP segment format
+### UDP Segment Format
 
-32bit
+32 bits
 
-* source port #, destination port #
+* source port #
 
-* length (in bytes of UDP segment, including header), checksum
+  destination port #
+
+* length (in bytes of UDP segment, including header)
+
+  checksum
 
 * application data (payload)
 
-### Internet checksum
+### UDP Checksum
 
-* goal: detect errors in transmitted segment
-* sender
+goal: detect errors in transmitted segment
+
+* sender: calculate the **checksum**
   * treat contents of UDP segment as sequence of 16-bit integers
-  * **checksum**: <u>addition</u> of segment content
-  * checksum value put into UDP checksum field
+  * <u>addition</u> of segment content (if overflow, wrap around)
+  * its 1s complement
+  * put the result into UDP checksum field
 * receiver
-  * compute checksum of received segment
-  * check if computed checksum equals checksum field value
-    * not equal - error detected
-    * equal - no error detected (errors may still exist)
+  * all 16-bit words are added
+    * all 1 - no error detected (errors may still exist)
+    * 0 exists - error detected
 
-## 3.4-1 Principles of Reliable Data Transfer
+## 3.4 Principles of Reliable Data Transfer
 
 sender-side/receiver-side of reliable data transfer protocol
 
 * Complexity of reliable data transfer protocol will <u>depend strongly on characteristics</u> of unreliable channel (can it lose, corrupt, reorder data?)
 * Sender, receiver <u>do not know the state</u> of each other, unless communicated via a message
 
-### RDT 1.0: reliable data transfer over a reliable channel
+### Building a Reliable Data Transfer Protocol
+
+#### RDT 1.0: Reliable Data Transfer over a Reliable Channel
 
 <u>reliable</u> underlying channel
 
 * no bit errors
 * no loss of packets
 
-separate <u>FSMs (finite state machine)</u> for sender, receiver (just send and receive)
+separate <u>FSMs (finite state machine)</u> for sender and receiver (just send and receive)
 
 * sender (wait for call from above) sends data into underlying channel
 * receiver (wait for call from velow) reads data from underlying channel
 
-### RDT 2.0: channel with bit errors
+#### RDT 2.0: Reliable Data Transfer over a Channel with Bit Errors
 
-underlying channel may flip bits in packet
+three additional protocol capabilities are required
 
-* checksum to detect bit errors
+* **error detection**: extra bits are needed to detect when bit errors have occurred
+* **receiver feedback**
+  * **positive acknowledgements (ACKs)**: receiver explicitly tells sender that pkt received ok
+  * **negative acknowledgements (NAKs)**: receiver explicitly tells sender that pkt had errors
+  * one bit long
+* **retransmission**: sender retransmits pkt on receipt of NAK
 
-how to <u>recover</u> from errors?
+**stop-and-wait** protocol: sender sends one packet, then waits for receiver response
 
-* **acknowledgements (ACKs)**: receiver explicitly tells sender that pkt received ok
+RDT 2.0 flaw: what happens if <u>ACK/NAK corrupted</u>?
 
-* **negative acknowledgements (NAKs)**: receiver explicitly tells sender that pkt had errors
+**RDT 2.1**: retransmit & sequence number
 
-* sender <u>retransmits</u> pkt on receipt of NAK
-* **stop and wait**: sender sends one packet, then waits for receiver response
+* possible duplicate -> add <u>sequence number</u> to each packet, receiver discards duplicate packet
 
-RDT2.0 has a fatal flaw: what happens if <u>ACK/NAK corrupted</u>?
+RDT 2.1 flaw: what happens if <u>packet lost</u>?
 
-* sender doesn't know what happened at receiver
-
-### RDT 2.1: sender, handling garbled ACK/NAKs
-
-retransmit
-
-* possible duplicate: add <u>sequence number</u> to each pkt, receiver discards duplicate pkt
-
-RDT 2.1 flaw: what happens if pkt lost?
-
-## 3.4-2 Principles of Reliable Data Transfer
-
-### RDT 3.0: channels with errors and loss
+#### RDT 3.0: Reliable Data Transfer over a Lossy Channel with Bit Errors
 
 underlying channel can both <u>corrupt and loss</u> packets (data, ACKs)
 
-Approach: sender <u>waits</u> reasonable amount of time for ACK
+**approach**: sender <u>waits</u> reasonable amount of time for ACK
 
 * <u>retransmits</u> if no ACK received in this time
 * if pkt just delayed (not lost)
-  * retransmission will be duplicate, but sequence handles this
-  * receiver must specify sequence of pkt being ACKed
-* use <u>countdown timer</u> to interrupt after reasonable amount of time
+  * retransmission will be duplicate, but <u>sequence number</u> handles this
+  * receiver must specify sequence of packet being ACKed
+* use <u>count-down timer</u> to interrupt after reasonable amount of time
+
+### Pipelined Reliable Data Transfer Protocols
 
 $$
 U_{sender} =\frac{L/R}{RTT+L/R}
@@ -220,49 +234,51 @@ $$
 * L: length of the packet
 * R: transmission rate
 
-Protocol limits performance of underlying infrastructure (channel)
+**pipelining**: sender allows multiple, "in-flight", yet-to-be-acknowledged packets
 
-### RDT 3.0: pipelined protocols operation
+* <u>range</u> of sequence numbers must be increased
+* <u>buffering</u> at sender and/or receiver
 
-pipelining: sender allows multiple, "in-flight", yet-to-be-acknowledged packets
+result in increased utilization
 
-* range of sequence numbers must be increased
-* buffering at sender and/or receiver
+### Go-Back-N (GBN)
 
-increased utilization
+a **sliding-window protocol**
 
-#### Go-Back-N
+**sender**: window of up to N consecutive transmitted but unACKed pkts
 
-sender: window of up to N, consecutive transmitted but unACKed pkts
+* k-bit sequence in pkt header
 
-* k-bit sequence pkt header
+* **Invocation from above**: if the window is full, buffer
 
-* **cumulative ACK**: ACKs all packets up to, including sequence # n
+* **cumulative ACK**: ACKs all packets up to and including n have been correctly received
 
   * on receiving ACK move forward to begin at n+1
 
-* <u>timer</u> for oldest in-flight packet
+* **A timeout event**: timer for oldest in-flight packet
 
-  <u>timeout</u>: retransmit packet n and all higher sequence # packets in window
+  <u>timeout</u>: retransmit packet <u>n and all higher sequence #</u> packets in the window
 
-receiver
+**receiver**
 
-* ACK-only: always send ACK for correctly-received packet so far, with <u>highest in-order</u> sequence #
+* <u>ACK-only</u>: always send ACK for correctly-received packet so far, with highest in-order sequence #
   * may generate duplicate ACKs
 
 * on receipt of out-of-order packet
 
-  * can <u>discard</u> or buffer
+  * discard
 
-  * re-ACK pkt with highest in-order sequence
+  * resend an ACK for the most recently received in-order packet
 
-#### Selective repeat
+**problem**: when the window size and bandwidth-delay are both large, a single packet error can cause GBN to <u>retransmit</u> a large number of packets
 
-receiver <u>individually</u> acknowledges all correctly received packets
+### Selective Repeat (SR)
+
+**receiver**: <u>individually</u> acknowledges all correctly received packets
 
 * buffer packets for eventual in-order delivery to upper layer
 
-sender
+**sender**
 
 * <u>data from above</u>: if next available sequence # in window, send packet
 * <u>timeout</u>: resend packet n, restart timer (only retransmit the loss packet)
@@ -270,7 +286,7 @@ sender
   * mark packet n as received
   * if n is the smallest unACKed packet, advance window base to next unACKed sequence #
 
-receiver
+**receiver**
 
 * <u>packet n in [rcvbase, rcvbase+N-1]</u>
   * send ACK(n)
@@ -279,23 +295,46 @@ receiver
 * <u>packet n in [rcvbase-N, rcvbase-1]</u>: ACK(n)
 * <u>otherwise</u>: ignore
 
-## 3.5-1 Connection-oriented Transport: TCP
+**lack of synchronization**: the sender & receiver will <u>not</u> always have an <u>identical</u> view of what has been received
 
-<u>point-to-point</u>: one sender, one receiver
+* the window size must be <u>less than or equal</u> to <u>half</u> the size of the sequence number space
 
-<u>reliable, in-order byte stream</u>: no "message boundaries"
+## 3.5 Connection-Oriented Transport: TCP
 
-<u>full duplex data</u>: bi-directional data flow in same connection, MSS: maximum segment size
+### The TCP Connection
 
-<u>cumulative ACKs</u>
+**connection-oriented** (logical connection)
 
-<u>pipelining</u>: TCP congestion and flow control set window size
+* handshaking before sending data
 
-<u>connection-oriented</u>: handshaking
+* send preliminary segments to each other
+* initialize many TCP state variables
 
-<u>flow control</u>: sender will not overwhelm receiver
+**full-duplex service**: bi-directional data flow in same connection
 
-### TCP segment structure
+**point-to-point**: between a single sender and a single receiver
+
+**three-way handshake**
+
+1. the client application informs the client transport layer that it wants to establish a connection to a process in the server
+2. the client sends a special TCP segment (no payload)
+3. the server responds with a second TCP segment (no payload)
+4. the client responds again with a third special segment
+
+**reliable, in-order byte stream**
+
+**cumulative ACKs**
+
+**pipelining**: TCP congestion and flow control set window size
+
+**flow control**: sender will not overwhelm receiver
+
+**maximum segment size (MSS)**: the maximum amount of <u>data</u> that can be grabbed and placed in a segment
+
+* based on the **maximum transmission unit (MTU)**
+* typically 1460 bytes
+
+### TCP Segment Structure
 
 32 bits
 
@@ -303,14 +342,16 @@ receiver
 
   destination port #
 
-* sequence number
+* **sequence number**
 
   * byte stream "number" of first byte in segment's data
+  * randomly choose an initial sequence #
 
-* acknowledgement number
+* **acknowledgement number**
 
   * sequence # of next byte expected from the sender
-  * cumulative ACK
+  * <u>cumulative acknowledgements</u>
+  * case study: Telnet
 
 * header length, not used, C, E, U, A, P, R, S, F
 
@@ -322,13 +363,17 @@ receiver
 
 * internet checksum
 
+  urgent data pointer
+
 * TCP options
 
 * application data (variable length)
 
-### Reliable Data Transter
+### Round-Trip Time Estimation and Timeout
 
-#### TCP round trip time, timeout
+TCP uses a <u>timeout/retransmit mechanism</u> to recover from lost segments
+
+**Round-Trip Time (RTT)**: the time from when a segment is <u>sent</u> until it is <u>acknowledged</u>
 
 How to set TCP timeout value
 
@@ -336,177 +381,269 @@ How to set TCP timeout value
 * <u>too short</u>: premature timeout, unnecessary retransmission
 * <u>too long</u>: slow reaction to segment loss
 
-How to estimate RTT
+#### Estimating the Round-Trip Time
 
-* **SampleRTT** measured time from segment transmission until ACK receipt
+**SampleRTT**: measured time from segment transmission until ACK receipt
 
-* SampleRTT will vary, want it to be smoother
+* estimated for one of the transmitted but currently unacknowledged segments (approximately <u>once every RTT</u>)
 
-  * average several recent measurement
+* <u>fluctuate</u> from segment to segment
 
-* $$
+**EstimatedRTT**: <u>average</u> of the SampleRTT values
+
+* updated when getting a new SampleRTT
+  $$
   EstimatedRTT=(1-\alpha)*EstimatedRTT+\alpha * SampleRTT
   $$
+  typical value for alpha is 0.125
 
-  typical value for alphah: 0.125
+**DevRTT**: an estimate of how much SampleRTT <u>deviates</u> from EstimatedRTT
 
 * $$
-  TimeoutInterval=EstimatedRTT+4*DevRTT\\
   DevRTT = (1-\beta)*DevRTT+\beta*|SampleRTT-EstimatedRTT|
   $$
 
-  want a safety margin
+  typically value for beta is 0.25
 
-  typically beta=0.25
+#### Setting and Managing Retransmission Timeout Interval
+
+greater than or equal to estimatedRTT
+
+TimeoutInterval
+
+* $$
+  TimeoutInterval=EstimatedRTT+4*DevRTT
+  $$
+
+* <u>initial</u> TimeoutInterval is 1 second
+* when a timeout occurs, the value of TimeoutInterval is <u>doubled</u>
+
+### Reliable Data Transfer
 
 #### TCP Sender
 
-event: data received from application
+event 1: data received from application above
 
-* create segment with seq #
-* seq # is byte-stream number of first data byte in segment
-* start timer if not already running (for oldest unACKed segment)
+* create segment with <u>sequence #</u>
+  * sequence # is byte-stream number of first data byte in segment
 
-event: timeout
+* start <u>timer</u> if not already running (for oldest unACKed segment)
+  * use TimeoutInterval
 
-* retransmit segment that caused timeout
-* restart timer
 
-event: ACK received
+event 2: timer timeout
+
+* <u>retransmit</u> segment that caused timeout
+* <u>restart</u> timer
+
+event 3: ACK receipt
 
 * if ACK acknowledges previously unACKed segment
-  * update
-  * start timer if there are still unACKed segments
+  * <u>update</u>
+  * start <u>timer</u> if there are still unACKed segments
 
-#### TCP Receiver
+#### Fast Retransmit
 
-| Event at receiver                                            | TCP receiver action                                          |
+TCP ACK Generation Recommendation
+
+| Event at Receiver                                            | TCP Receiver Action                                          |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| arrival of in-order segment with expected seq #. All data up to expected seq # already ACKed | delayed ACK. Wait up to 500ms for next segment. If no next segment, send ACK. |
-| arrival of in-order segment with expected seq #. One other segment has ACK pending (event 1). | immediately send single cumulative ACK, ACKing both in-order segments |
-| arrival of out-of-order segment higher-than-expect seq #. Gap detected. | immediately send duplicate ACK, indicating seq # of next expected byte |
-| arrival of segment that partially or completely fills gap    | immediately send ACK, provided that segment starts at lower end of gap |
+| Arrival of <u>in-order</u> segment with <u>expected</u> seq #. All data up to expected seq # already ACKed | <u>Delayed</u> ACK. Wait up to 500ms for next segment. If no next segment, send ACK. |
+| Arrival of <u>in-order</u> segment with expected seq #. One other segment has ACK pending (<u>event 1</u>). | Immediately <u>send</u> single cumulative ACK, ACKing both in-order segments |
+| Arrival of out-of-order segment higher-than-expect seq #. <u>Gap</u> detected. | immediately send <u>duplicate ACK,</u> indicating seq # of next expected byte (which is the lower end of the gap) |
+| Arrival of segment that partially or completely <u>fills gap</u> | immediately <u>send</u> ACK, provided that segment starts at lower end of gap |
 
-<u>TCP fast retransmit</u>: if sender receives 3 ACKs for same data, resend unACKed segment with smallest seq #(don't wait for timeout)
+**fast retransmit**: if sender receives <u>3 ACKs for same data</u>, <u>resend</u> unACKed segment with smallest seq #(don't wait for timeout)
 
-## 3.5-2 Connection-oriented Transport: TCP
+#### Hybrid of GBN and SR protocols
+
+maintain the smallest sequence number
+
+buffer correctly received but out-of-order segments
 
 ### Flow Control
 
-receiver <u>controls sender</u>, so sender won't overflow receiver's buffer by transmitting too much, too fast
+The application process will read data from the buffer, but <u>not</u> at the <u>instant</u> the data arrives
 
-TCP flow control
+**flow-control service**: a <u>speed-matching</u> service matching the rate at which the sender is sending against the rate at which the receiving application is reading
 
-* TCP receiver advertises free buffer space in **rwnd** (receive window in TCP header) filed in TCP header
+* the receiver allocates a receive buffer **RcvBuffer**
+
   * **RcvBuffer** size set via socket options
   * many operating systems auto adjust **RcvBuffer**
-* sender limits amount of unACKed data to received rwnd
-* guarantees receive buffer will not overflow
 
-### Connection Management
+* the sender maintains a variable **receive window** rwnd
+
+  * how much <u>free</u> buffer space is available at the receiver
+
+  * rwnd sent by the receiver
+    $$
+    rwnd=LastByteRead-LastByteRcvd \leq RcvBuffer
+    $$
+
+  * $$
+    LastByteSent-LastByteAcked\leq rwnd
+    $$
+
+* the sender continue to send segments with <u>one data byte</u> when the receiver's receive window is <u>zero</u>
+
+In UDP, segments may lost at the receiver due to buffer overflow
+
+### TCP Connection Management
 
 handshake before exchanging data
 
 * agree to <u>establish</u> connection
 * agree on connection <u>parameters</u> (e.g. starting seq #)
 
-TCP 3-way handshake
+TCP **three-way handshake**
 
-1. client: choose init seq num, send TCP <u>SYN</u> message
+1. client: send a **SYN segment**
+   * no application-layer data
+   * SYN bit is 1
+   * randomly chooses an initial sequence number (client_isn)
+2. server: send a **SYNACK segment**
+   * no application-layer data
+   * SYN bit is 1
+   * the acknowledgement field is client_isn+1
+   * chooses an initial sequence number (server_isn)
+3. client
+   * allocates buffers and variables
+   * the acknowledgement field is server_isn+1
+   * SYN bit is 0
+   * may carry client-to-server data in the segment payload
 
-2. server: choose init seq num, send TCP <u>SYNACK</u> message, acking SYN
-3. client: received SYNACK indicates server is live, send <u>ACK</u> for SYNACK, this segment may contain client-to-server data
-4. server: received ACK indicates client is live
-
-closing a TCP connection
+end a TCP connection: the resources (buffers & variables) are deallocated
 
 1. client, server <u>each</u> close their side of connection: send TCP segment with <u>FIN bit = 1</u>
 2. respond to received FIN with <u>ACK</u>: on receiving FIN, ACK can be combined with own FIN
 3. simultaneous FIN exchanges can be handled
 
+if receives a TCP SYN packet, but the host is not accepting connections on port 80
+
+* send a special reset segment to the source (RST bit is 1)
+
 ## 3.6 Principles of Congestion Control
+
+Packet retransmission treats a symptom of network congestion but not the cause
 
 ### Causes and Costs of Congestion
 
-**congestion control**: too <u>many</u> senders, sending too fast
+**congestion control**: too many senders, sending too fast
 
 * manifestation: long delays (queue in router buffers), packet loss (buffer overflow at routers)
 
-**flow control**: <u>one</u> sender too fast for one receiver
+**flow control**: one sender too fast for one receiver
 
-scenario 1: one router, infinite buffers (no retransmission)
+**scenario 1**: two senders, a router with infinite buffers (no retransmission)
 
-* when reaching the maximum per-connection throughput, large delays occurs
+* cost 1: when reaching the maximum per-connection throughput, <u>large queueing delays</u> occurs
+* an aggregate throughput near R is <u>not ideal</u> from a <u>delay</u> standpoint
 
-scenario 2: one router, finite buffers
+**scenario 2**: two senders, a router with finite buffers (with retransmission)
 
-* sender retransmits lost, timed-out packet -> actual throughput = original data + retransmitted data
-* "wasted" capacity due to un-needed retransmissions (don't know whether a segment is lost or not)
+* cost 2: the sender must perform <u>retransmissions</u> in order to compensate for dropped packets due to buffer overflow
+  * sender retransmits lost, timed-out packet -> actual throughput = original data + retransmitted data
 
-scenario 3: four senders, multi-hop paths, timeout/retransmit
+* cost 3: <u>unneeded retransmissions</u> by the sender in the face of large delays may cause a router to use its link bandwidth to forward unneeded copies of a packet
+  * don't know whether a segment is lost or not
 
-**costs of congestion**
 
-* throughput can <u>never exceed</u> capacity (scenario 1)
+**scenario 3**: four senders, routers with finite buffers, and multi-hop paths
+
+* cost 4: when a packet is dropped along a path, the retransmission capacity that was used at each of the upstream links to forward that packet to the point at which it is dropped ends up having been wasted
+
+**summary**: cost of congestion
+
 * delay increases as capacity approach (scenario 1)
-* <u>loss/retransmission</u> decreases effective throughput (scenario 2)
-* <u>un-needed duplicates</u> further decreases effective throughput (scenario 2)
-* <u>upstream</u> transmission capacity/buffering wasted for packets lost <u>downstream</u>
+* loss/retransmission decreases effective throughput (scenario 2)
+* un-needed duplicates further decreases effective throughput (scenario 2)
+* upstream transmission capacity/buffering wasted for packets lost downstream (scenario 3)
 
 ### Approaches towards Congestion Control
 
-End-end Congestion Control (central part)
+**End-to-end Congestion Control**
 
-* congestion <u>inferred</u> from observed loss, delay (ACKs) at the sender
+* no explicit support from the network layer
+* congestion inferred from observed loss, delay (ACKs) at the sender
 
-* no explicit feedback from network
+**Network-assisted Congestion Control**
 
-Network-assisted Congestion Control
-
-* router provide direct feedback to sending/receiving hosts
+* routers provide direct feedback to sending/receiving hosts
 
 ## 3.7 TCP Congestion Control
 
-### Classic TCP: loss based, end-end
+how a TCP sender <u>limits the rate</u> at which it sends traffic into its connection?
 
-#### additive increase, multiplicative decrease (AIMD)
-
-* **approach**: senders can <u>increase</u> sending rate until packet loss occurs, then <u>decrease</u> sending rate on <u>loss event</u>
-* Additive Increase: increase sending rate by <u>1 maximum segment size</u> every RTT until loss detected
-* Multiplicative Decrease: cut sending rate <u>in half</u> at each loss event
-  * cut in half on loss detected by <u>triple duplicate ACK</u> (TCP Reno)
-  * cut to <u>1 MSS</u> (maximum segment size) when loss detected by timeout (TCP Tahoe)
-
-implements
-
-* TCP sender limits transmission: <u>LastByteSent - LastByteAcked <= cwnd</u>
-
-* cwnd is dynamically adjusted in response to observed network congestion (based on AIMD algorithm)
-
-* TCP sending behavior
+* **congestion window** cwnd imposes a constraint on the rate
   $$
-  TCP~~rate \approx \frac{cwnd}{RTT}~~bytes/sec
+  LastByteSent-LastByteAcked\leq min \{cwnd,~rwnd\}
   $$
 
-#### TCP slow start
+* limits the amount of unacknowledged data at the sender and therefore <u>indirectly</u> limits the sender's send data
 
-when connection begins, increase rate exponentially until first loss event
+how a TCP sender <u>perceives</u> that there is <u>congestion</u> on the path between itself and the destination?
 
-* initially cwnd = 1MSS
-* double cwnd every RTT (done by incrementing cwnd for every ACK received)
+* the <u>lost datagram</u> is taken by the sender to be an indication of congestion
+* **self-clocking**: the <u>acknowledgements</u> is used to increase its congestion window size
 
-#### TCP: from slow start to congestion avoidance
+how should a TCP sender determine the rate at which it should send?
 
-implementation
+* A lost segment implies congestion, and hence, the TCP sender's rate should be **decreased when a segment is lost**
+* An acknowledged segment indicates that the network is delivering the sender's segments to the receiver, and hence, the sender's rate can be **increased when an ACK arrives for a previously unacknowledged segment**
+* **Bandwidth probing** (probe for the rate)
 
-* variable **ssthresh**
-* on loss event, ssthresh is set to 1/2 of cwnd just before loss event
+three major components in **TCP congestion-control algorithm**
 
-#### TCP Cubic
+1. slow start
+2. congestion avoidance
+3. fast recovery (not required)
 
-larger increases when further away from K
+#### Slow Start
 
-smaller increases when nearer K
+when a TCP connection begins or a timeout happens
+
+1. cwnd begins at 1MSS
+
+2. cwnd doubles every RTT (increases by 1 MSS every time a transmitted segment is first acknowledged)
+
+3. if there is a loss event
+
+   1. **ssthresh** (slow start threshold) = <u>cwnd/2</u> (half of the value of the cwnd value when congestion was detected)
+   2. cwnd = 1 MSS, and <u>slow start</u> process begins
+
+4. when the value of <u>cwnd = ssthresh</u>, slow start ends and TCP transitions into **congestion avoidance** mode
+
+   or if <u>three duplicate ACKs</u> are detected, TCP performs a fast retransmit and enters the **fast recovery** state
+
+#### Congestion Avoidance
+
+when cwnd = ssthresh
+
+* cwnd = cwnd + 1MSS every RTT
+* when a timeout occurs
+  * ssthresh = cwnd/2
+  * cwnd = 1 MSS
+* when three duplicate ACKs are detected
+  * ssthresh = cwnd/2
+  * cwnd = ssthresh + 3MSS
+
+#### Fast Recovery
+
+when three duplicate ACKs are detected
+
+* cwnd = cwnd +MSS
+* when timeout, slow start
+* when new ACK arrives, congestion avoidance
+
+**additive increase, multiplicative decrease (AIMD)**
+
+### Fairness
+
+TCP results in an equal sharing of bandwidth among connections
+
+* <u>UDP</u>: applications using UDP has a constant transmission rate which makes it possible for UDP sources to crowd out TCP traffic
+* <u>Parallel TCP connections</u>: gets a larger fraction of the bandwidth in a congested link
 
 ### Enhanced TCPs
 
@@ -523,16 +660,14 @@ else if measured throughput <u>below</u> uncongested throughput, decrease cwnd l
 
 #### Explicit Congestion Notification (ECN)
 
-network-assisted congestion control
+network-assisted congestion control (involves both IP and TCP)
 
 * two bits in IP header ECN marked by <u>network router</u> to indicate congestion
+  * experiencing congestion
+  * ECN-capable
+
 * congestion indication carried to destination
 * destination sets <u>ECE bit on ACK segment</u> to notify sender of congestion
-* involves both IP and TCP
-
-### TCP fairness
-
-fairness goal: if K TCP sessions share same bottleneck link of bandwidth R, each should have <u>average rate</u> of R/K
 
 ## 3.8 Evolution of Transport Layer Functionality
 
