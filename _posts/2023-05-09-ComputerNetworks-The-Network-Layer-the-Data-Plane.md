@@ -9,7 +9,7 @@ math: true
 
 ## 4.1 Network Layer Overview
 
-### Network-layer services and protocols
+### Network-layer Services
 
 transport segment from sending to receiving host
 
@@ -22,7 +22,7 @@ network layer protocols in **every Internet devices** (including hosts & routers
   * <u>examines</u> header fields in all IP datagrams passing through it
   * <u>moves</u> datagrams from input ports to output ports to transfer datagrams along end-end path
 
-### Two key network-layer functions
+### Two Key Network-layer Functions
 
 **forwarding**: move packets from a router's input link to appropriate router output link
 
@@ -32,23 +32,23 @@ network layer protocols in **every Internet devices** (including hosts & routers
 
 * implemented in routing algorithm (software)
 
-### Network layer: data plane, control plane
+### Network Layer: Data Plane & Control Plane
 
 **Data plane**
 
 * **local**, per-router function
-* determines how datagram arriving on router <u>input</u> port is forwarded to router <u>output</u> port
+* determines how datagram arriving on router <u>input port</u> is forwarded to router <u>output port</u>
 
 **Control plane**
 
 * **network-wide** logic
-* determines how datagram is routed among routers along end-end path from <u>source</u> host to <u>destination</u> host
+* determines how datagram is routed among routers along end-end path from <u>source host</u> to <u>destination host</u>
 
 * two control-plane approaches
-  1. **traditional routing algorithms**: implemented in routers
+  1. **traditional routing algorithms**: implemented in routers (exchange routing messages)
   2. **software-defined networking (SDN)**: implemented in servers
 
-### Network-layer service model
+### Network-layer Service Model
 
 Internet "best effort" service model: **No guarantees** on
 
@@ -78,9 +78,9 @@ Sufficient **provisioning of bandwidth** allows performance of real-time applica
 
 ### Input Ports
 
-1. line termination: physical layer: bit-level reception
+1. line termination (physical-layer function): bit-level reception
 
-2. link layer protocol: link layer: e.g. Ethernet
+2. link layer protocol (link-layer function): e.g. Ethernet
 3. look up, forwarding, queueing: decentralized switching
    * using <u>header field values</u>, lookup output port using <u>forwarding table</u> in input port memory
    * **destination-based forwarding**: forward based only on destination <u>IP address</u> (traditional)
@@ -101,31 +101,37 @@ destination-based forwarding
 
 ### Switching
 
-**switching fabric**: <u>transfer</u> packet from input link to appropriate output link
-
 **switching rate**: rate at which packets can be transfer from inputs to outputs
 
 * N input ports, R incoming rate
 * ideally rate = N*R
 
-three major types of switching fabrics
+**switching fabric**: <u>transfer</u> packet from input link to appropriate output link
 
-* <u>memory</u>
+* **memory**
   * switching under direct control of <u>CPU</u>
   * packet <u>copied</u> to system's memory
+  * then copied to the output port's buffers
   * speed limited by memory bandwidth
-* bus
-  * switching speed limited by bus bandwidth
-* interconnection network (most widely adopted)
-  * crossbar, clos network, other interconnection nets initially developed to connect processors in multiprocessor
+* **bus**
+  * generate a switch-internal <u>label</u>
+  * only the port that matches the label will keep the packet
+  * remove the label
+  * speed limited by bus bandwidth
+* **interconnection network** (most widely adopted)
+  * overcome the bandwidth limitation of a single, shared bus
+  * **crossbar switch**
+    * consists of <u>2N buses</u> that connect N input ports to N output ports
+    * **non-blocking**: capable of forwarding multiple packets in parallel (except for these destined to the same output port)
   * **multistage switch**
-  * exploiting **parallelism**: fragment datagram into fixed length cells on entry, switch cells through the fabric, reassemble datagram at exit
-  * using multiple switching planes in parallel
-    * Cisco CRS router
-      * basic unit: 8 switching planes
-      * each plane: 3-stage interconnection network
+    * exploiting **parallelism**: fragment datagram into fixed length cells on entry, switch cells through the fabric, reassemble datagram at exit
 
 ### Output Ports
+
+1. (switch fabric)
+2. Queuing (buffer management)
+3. Data link processing
+4. Line termination
 
 input port queuing: occurs when switch fabric slower than input ports combined
 
@@ -139,12 +145,12 @@ output port queuing
 
   * RFC 3439: average buffering equal to "typical" RTT times link capacity C
 
-  * with N flows buffering equal to
+  * with N TCP flows, buffering equal to
     $$
     \frac{RTT\cdot C}{\sqrt{N}}
     $$
 
-  * <u>too much buffering</u> can increase <u>delays</u>
+  * (<u>too much buffering</u> can increase <u>delays</u>)
 
 * **Drop policy**: which datagrams to <u>drop</u> if no free buffers (congestion)
 
@@ -172,12 +178,13 @@ output port queuing
 
 * also known as <u>First-in-first-out (FIFO)</u>
 
-**Priority scheduling**: arriving traffic classified, queued by <u>class</u>
+**Priority Queuing**: classified into priority classes
 
-* send packet from <u>highest</u> priority queue that has buffered packets
-* <u>FCFS</u> within priority class
+* each class has a queue
+* FCFS in each queue
+* **non-preemptive priority queuing**
 
-**Round Robin (RR) scheduling**
+**Round Robin (RR) Queuing**
 
 * arriving traffic classified, queued by class
 * server cyclically, repeatedly scans class queues, sending one complete <u>packet from each class in turn</u>
@@ -191,38 +198,64 @@ output port queuing
 
 * minimum bandwidth guarantee
 
-### Sidebar: Network Neutrality
+> ### Sidebar: Network Neutrality
+>
+> **network neutrality**: how an ISP should share/allocate its resources
+>
+> 2015 US FCC
+>
+> * no blocking
+> * no throttling
+> * no paid prioritization
 
-**network neutrality**: how an ISP should share/allocate its resources
+## 4.3 The Internet Protocol - IPv4, Addressing, IPv6 and More
 
-2015 US FCC
+### IP Datagram Format
 
-* no blocking
-* no throttling
-* no paid prioritization
+Typically datagram is 1500 bytes or less
 
-## 4.3 The Internet Protocol - IPv4, addressing
+* **version number**
+* **header length**: to determine where in the IP datagram the payload actually begins
+* **type of service**: e.g. real-time datagrams or non-real-time
+* **datagram length**: total length of the IP datagram (header plus data)
+* **identifier, flags, fragmentation offset**: for IP fragmentation
+* **time-to-live** (TTL): prevent circulation (decremented by one each time the datagram is processed by a router. If it is 0, a router must drop the datagram)
+* **protocol**: the specific transport-layer protocol
+* **header checksum**: the Internet checksum
+* **source and destination IP address**
+* **options**
+* **data (payload)**
 
-### IP Datagram format
+datagram header (40 bytes) = 20 bytes (from datagram header) + 20 bytes (from TCP segment header)
 
-32 bits each (Typically datagram is 1500 bytes or less)
+### IPv4 Datagram Fragmentation
 
-* IP protocol version number, header length(bytes), type of service(diffserv, ECN for congestion), total datagram length (bytes)
-* 16-bit identifier, flags, fragment offset (for fragmentation)
-* time to live TTL, upper later (e.g. TCP, UDP), header checksum
-* source IP address
-* destination IP address
-* options
-* payload data (typically a TCP, UDP segment)
+**maximum transmission unit (MTU)**: the maximum amount of data that a link-layer frame can carry
 
-### IP addressing
+* <u>varies</u> in different link-layer protocols
+* <u>limits</u> the length of an IP datagram
 
-**IP addressing**: 32-bit identifier associated with each host or router <u>interface</u>
+Each of the links along the route between sender and destination have <u>different MTUs</u>
+
+* solution
+  * <u>fragment</u> the payload in the IP datagram into two or more smaller IP datagrams
+  * datagrams are <u>reassembled in the end systems</u> rather than in network routers
+* how
+  * **identifier**: the sending host <u>increments the identifier</u> for each datagram it sends
+  * **flag**: the last fragment is 0, otherwise 1
+  * **offset**: specify where the fragment fits within the original IP datagram
+
+### IPv4 Addressing
 
 **interface**: connection between host/router and physical link
 
-* router's typically have multiple interfaces
-* host typically has one or two interfaces
+* router's typically have multiple links
+
+  Each link has an interface
+
+* host typically has one or two links, thus has one or two interfaces
+
+**IP address**: 32-bit identifier associated with each host‘s or router's <u>interface</u>
 
 #### Subnets
 
@@ -236,7 +269,7 @@ IP address have structure
 example
 
 * 233.1.3.0/24
-* /24 is the subnet mask (high-order 24 bits is the subnet part of IP address)
+* /24 is the **subnet mask** (high-order 24 bits is the subnet part of IP address)
 
 #### CIDR
 
@@ -245,55 +278,78 @@ example
 * subnet portion of address of arbitrary length
 * address format: <u>a.b.c.d/x</u>, where x is # bits in subnet portion of address
 
+**IP broadcast address**: 255.255.255.255
+
+* the message is delivered to all hosts on the same subnet
+
 #### How to get IP address?
 
-How does a host get <u>host part</u> of address
+##### Obtaining a Block of Addresses
 
-* hard-coded by sys admin in config file
-* **DHCP**: Dynamic Host Configuration Protocol
+for use within an organization's subnet
 
-DHCP
+* contact its ISP
 
-* goal: host dynamically obtains IP address from network server when it joins network
-  * can renew its lease
-  * allows reuse of addresses
-* **DHCP server**: co-located in router, serving all subnets to which router is attached
-* DHCP client-server scenario
-  * <u>DHCP discover</u>: Broadcast to find a DHCP server (optional)
-  * <u>DHCP offer</u>: give an IP address (optional)
-  * <u>DHCP request</u>: Broadcast including the IP address that the host wants to use
-  * <u>DHCP ACK</u>: Broadcast
-* DHCP can return
-  * allocate IP address on subnet
-  * address of first-hop router for client
+  get allocated portion of its provider ISP's address space
+
+* ICANN is responsible for managing the IP address space
+
+example
+
+* ISP: 200.23.16.0/20
+* Organization 0: 200.23.16.0/23
+* Organization 1: 200.23.18.0/23
+
+##### Obtaining a Host Address
+
+router: a system administrator will typically <u>manually configure</u> the IP addresses into the router
+
+host: **DHCP Dynamic Host Configuration Protocol**
+
+DHCP: a plug-and-play protocol
+
+* goal: host dynamically obtains IP address (permanent or temporary) from network server when it joins network
+* a client-server protocol
+  * <u>DHCP server</u>: co-located in router, serving all subnets to which router is attached
+  
+* a four-step process
+  * **DHCP server discovery**: Broadcast to find a DHCP server (optional)
+  * **DHCP server offers**: give an IP address (optional)
+  * **DHCP request**: Broadcast including the IP address that the host wants to use
+  * **DHCP ACK**: Broadcast
+  * can use the DHCP-allocated IP address for the lease duration
+    * can renew its lease
+* DHCP can also return
+  * address of first-hop router for client (default gateway)
   * name and IP address of DNS server
-  * network mask
+  * subnet mask
 
-How does a network get <u>subnet part</u> of address
-
-* get allocated portion of its provider ISP's address space
-* example
-  * ISP: 200.23.16.0/20
-  * Organization 0: 200.23.16.0/23
-  * Organization 1: 200.23.18.0/23
-
-### Hierarchical addressing
-
-**route aggregation**
-
-* allows efficient advertisement of routing information: clients has the same address beginning as their ISP
-
-choose more <u>specific</u> route: longest prefix match
-
-## 4.3 The Internet Protocol - NAT, IPv6
+> ### Hierarchical addressing
+>
+> **route aggregation**
+>
+> * allows efficient advertisement of routing information: clients has the same address beginning as their ISP
+>
+> choose more <u>specific</u> route: longest prefix match
 
 ### NAT: Network Address Translation
 
-All devices in local network share just one IPv4 address.
+**private network** or **realm with private addresses**: network whose addresses only have meaning to devices within that network
 
-All datagrams leaving local network have the <u>same</u> source NAT IP address, but different source port numbers.
+* 10.0.0.0/8
+* 172.16.0.0/12
+* 192.168.0.0/16
 
-All devices in local network have 32-bit addresses in a private IP address space (<u>10/8, 172.16/12, 192.168/16 prefixes</u>) that can only <u>be used in local network</u>
+the NAT router behaves to the outside world as a <u>single</u> device with a <u>single</u> IP address
+
+* router gets its address from the ISP's DHCP server
+* router runs a DHCP server to provide addresses to computers within the NAT-DHCP-router-controlled home network's address space
+
+implementation
+
+* <u>outgoing datagrams</u>: replace (source IP address, port #) to (NAT IP address, new port #)
+* <u>remember</u> (in **NAT translation table**) every translation pair
+* <u>incoming datagrams</u>: replace (NAT IP address, new port #) to (source IP address, port #)
 
 advantages
 
@@ -302,53 +358,62 @@ advantages
 * can change ISP <u>without changing</u> addresses of devices in local network
 * security: devices inside local net <u>not directly addressable, visible</u> by outside world
 
-implementation
-
-* <u>outgoing datagrams</u>: replace (source IP address, port #) to (NAT IP address, new port #)
-* <u>remember</u> (in NAT translation table) every translation pair
-* <u>incoming datagrams</u>: replace (NAT IP address, new port #) to (source IP address, port #)
-
 ### IPv6
 
-motivation
+motivation: 32-bit IPv4 address space would be completely allocated
 
-* 32-bit IPv4 address space would be completely allocated
-* speed processing/forwarding: 40-byte fixed length header
-* enable different network-layer treatment of flows
+datagram format changes
 
-datagram format: 32 bits each
+* **Expanded addressing capabilities**: 128-bit
+* **A streamlined 40-byte header**: faster processing
+  * **Version**: IP version
+  * **Traffic class**: give priority to certain datagrams
+  * **Flow label**: identify a flow of datagram
+  * **Payload length**
+  * **Next header**: identify the transport layer protocol
+  * **Hop limit**: decremented by one by each router that forwards the datagram
+  * **Source and destination addresses**
+  * **Data**
 
-* version, priority, flow label (identify datagrams in same flow)
-* payload length, next header, hop limit
-* 128-bit IPv6 address
-* payload
-* no checksum, fragmentation, options
+* **Flow labeling**: enable different network-layer treatment of flows
 
-Transition from IPv4 to IPv6
+* deleted parts
+  * **Fragmentation**
+    * does not allow for fragmentation and reassembly at intermediate routers; these can be performed only by the source and destination
+    * simply drops the datagram and sends a ICMP error message
+  * **Header checksum**: unnecessary since the transport-layer and link-layer protocols have
+  * **Options**
 
-* how will network operate with mixed IPv4 and IPv6 router
+Transition from IPv4 to IPv6: how will network operate with mixed IPv4 and IPv6 router
+
 * **tunneling**: IPv6 datagram carried as payload in IPv4 datagram among IPv4 router
 
 ## 4.4 Generalized Forwarding and SDN
 
-### generalized forwarding
+### Generalized Forwarding
 
-many header fields can determine action
+destination-based forwarding
 
-many action possible: drop/copy/modify/log packet
+1. **match**: look up a destination IP address
+2. **action**: send the packet into the switching fabric to the specific output port
 
-flow table abstraction
+generalized forwarding
 
-* <u>flow</u>: defined by header field values
-* <u>generalized forwarding</u>: simple packet-handling rules
-  * <u>match</u>: pattern values in packet header fields
-  * <u>actions</u>
-  * <u>priority</u>: disambiguate overlapping patterns
-  * <u>counters</u>: # bytes and # packets
+1. **match**: based on multiple header fields
+2. **action**: forward/drop/copy/modify/log packet
+
+**flow table** abstraction
+
+* <u>A set of header field values</u>: to which an incoming packet will be matched
+* <u>A set of counters</u>: e.g. the number of packets that have been matched by that table entry
+* <u>A set of actions to be taken</u>
 
 ### OpenFlow
 
-match+action: abstraction unifies different kinds of devices
+match+action abstraction unifies different kinds of devices
+
+* allows for a match to be made on selected fields from <u>three layers</u> of protocol headers
+* each flow table entry has a <u>priority</u>
 
 * Router
   * match: longest destination IP prefix
