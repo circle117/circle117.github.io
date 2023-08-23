@@ -1,7 +1,7 @@
 ---
 title: 6 The Link Layer
 date: 2023-05-23 14:08:00 +0800
-categories: [Basic, Computer Network]
+categories: [Basic, Computer Networking A Top-Down Approach]
 tags: [basic]        # lowercase
 toc: true
 math: true
