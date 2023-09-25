@@ -9,9 +9,6 @@ toc: true
 ## 3.1 A Simple Java Program
 
 ```java
-/* public: access modifier
-   class: every Java must be inside a class
-   case sensitive */
 public class FirstSample
 {
 	public static void main(String[] args)
@@ -22,20 +19,66 @@ public class FirstSample
 }
 ```
 
-Steps
+* case sensitive
 
-1. Write the code in **FirstSample.java** (the same as the public class name)
-2. Get the bytecode file **FirstSample.class** from compiler
-3. Launch the program using **java FirstSample**
-4. Java virtual machine execute the code in **main** method
+* *public*: access modifier
+
+* *class*: Everything in a Java program must be inside a class
+
+* *CamelCase*: nouns that start with an uppercase letter
+
+* the file name: className.java
+
+  bytecode file name: FirstSample.class
+
+* *java FirstSample*: launch the program
+
+---
+
+* *main method*: starts execution with the code in the main method
+
+* *semicolon*: every statement ends with a semicolon
+* *object.method(parameters)*: use zero, one or more parameters
+
+## 3.2 Comments
+
+1.  / /: the most common form
+
+2. /* and */
+
+3. /**
+
+    *
+
+    */
 
 ## 3.3 Data Types
 
-> Java is a strongly typed language
+Java is a strongly <u>typed</u> language
+
+primitive types
+
+* int
+* short
+* long
+* byte
+
+---
+
+* float
+* double
+
+---
+
+* char
+
+---
+
+* boolean
 
 ### Integer
 
-> Without fractional parts
+numbers without fractional parts
 
 | Type name | Length | Comments                |
 | --------- | ------ | ----------------------- |
@@ -44,87 +87,100 @@ Steps
 | short     | 2      | specialized application |
 | byte      | 1      | specialized application |
 
+* The ranges for the various types in Java programs are <u>fixed</u>
 * Hexa-decimal: prefix 0x/0X
 * Binary: prefix 0b/0B
+* can add underscores to number literals
 
 ### Floating-Point
+
+denote numbers with fractional parts
 
 | Type name | Length | Comments   |
 | --------- | ------ | ---------- |
 | double    | 8      |            |
 | float     | 4      | suffix F/f |
 
-* Not suitable for financial calculation (no precise binary presentation)
+* Use float values only when you work with a library that requires them, or need to store a very large number of them
 * Values
   * positive infinity
   * negative infinity
   * NaN
+    * use *Double.isNaN* to check
 
 ### Char
 
-> Enclosed in single quotes
+Enclosed in single quotes
 
-* Java use unicode characters
+* some Unicode characters can be described with one char value
+
+  and other Unicode characters require two char values
+
 * Usually use String
+
+### Unicode
+
+*code point*: a code value that is associated with a character in an encoding scheme
+
+*first code plane*: basic multilingual plane consisting of the classic Unicode characters with code points U+0000 to U+FFFF
+
+*code unit*: 16-bit value
+
+*surrogates area*: unused values of the basic multilingual plane
+
+* U+D800 to U+DBFF for the first code
+* U+DC00 to U+DFFF for the second code
+
+<u>char</u> describes a <u>code unit</u> in the UTF-16 encoding.
 
 ### Boolean
 
-> False or true
+two values: *false* or *true*
 
 * Cannot be converted into integer values
 
 ## 3.4 Variables and Constants
 
-### Declare
+variables: store values
 
-```java
-int i;
-int i, j;
-```
+constants: values don't change
 
-### Initialize
+### Variables
 
-```Java
-int i;
-i = 30;
+Declare
 
-int i=30;
+* *type name*
 
-var i=30;					// can be inferred in Java 10
-```
+Initialize
+
+* <u>explicitly</u> initialize it by means of an assignment statement
 
 ### Constants
 
-```java
-final double CM_PER_INCH=2.54;
-```
+Use keyword *final*: can assign to the variable <u>once</u>
 
-* Use keyword **final**
+* customary to name constants in all <u>uppercase</u>
 
-* Assign to the variable once
+* ```java
+  class MyClass {
+    public static final double CM_PER_INCH = 2.54;			// other methods in the class can use it
+  }
+  ```
 
-* Named in all uppercase
+  *static final*: class constants
 
-* class constants
-
-  * ```java
-    class myClass {
-      public static final double CM_PER_INCH = 2.54;
-    }
-    ```
-
-  * Methods of other classes can use it as **className.constantName**
+  * if declared as *public*, methods of other classes can use it as **className.constantName**
 
 ### Enumerated Types
 
-> A finite number of named values
+has a <u>finite</u> number of named values
 
 ```java
 enum Size {SMALL, MEDIUM, LARGE};
 Size s = Size.MEDIUM;
 ```
 
-* Size holds one of the values listed or **null**
+* Size holds one of the values listed or *null*
 
 ## 3.5 Operators
 
@@ -134,29 +190,26 @@ Size s = Size.MEDIUM;
 * -
 * *
 * /
-  * Integer division: both arguments are integers (exception)
-  * Floating-point division: otherwise (NaN)
+  * integer division: both arguments are integers
+    * division by 0: exception
+  * floating-point division: otherwise
+    * division by 0: infinite or NaN
+* %: integer remainder
 
 ### Mathematical Functions and Constants
 
-Methods
+*Math* class
 
 * sqrt(8)
 * pow(x, a)
-* floorMod(position+adjustment, 12)
-* PI
-* E
-
-Classes
-
-* **Math** fastest performance
-* **StrictMath** predictable results
-
-Return wrong results when a computation overflows
+* floorMod(x+y, 12)
+* trigonometric function
+* exponential function
+* mathematical function
 
 ### Conversions between Numeric Types
 
-Loss precision
+may loss precision
 
 * int -> float
 * long -> float
@@ -172,12 +225,15 @@ Two different types of values with a binary operator
 int wx = (int) 9.567;					// discard the fractional part
 
 // round
-Math.round(9.567);						// return a long
+int x = (int) Math.round(9.567);						// return a long
 ```
+
+* give the target type in <u>parentheses</u>
+* may lost information
 
 Cannot cast between **boolean** and any **numeric** types, use b?1:0
 
-### Combine Assignment with Operators
+### Combining Assignment with Operators
 
 shortcut for binary operators
 
@@ -194,125 +250,189 @@ n++;													// postfix form
 
 ### Relational and Boolean Operators
 
-**==**, **!=**, **>=**, **<=**, **>**, **<**
+relational operators
 
-Short circuit fashion: **&&**, **||**, **!**
+* ==
+* !=
+* \>=
+* <=
+* \>
+* <
 
-Ternary operator: **condition ? expression 1: expression 2**
+logical operators
+
+* &&
+* ||
+* !
+* <u>short circuit fashion</u>
+
+Ternary operator
+
+* condition ? expression 1: expression 2
+
+### Bitwise Operators
+
+operators that work directly with the bits that make up the intergers
+
+* &: and
+
+* |: or
+
+* ^: xor
+
+* ~: not
+
+* \>\>: shift a bit pattern right, extends the sign bit into the top bits
+
+  \>\>\>: fills the top bits with zero
+
+* <<: shift a bit pattern left
+
+### Parentheses and Operator Hierarchy
+
+1. method call: [] . ()
+2. ! ~ ++ -- (cast) new
+3. \* / %
+4. \+ -
+5. \<< >> >>>
+6. \< <= > >= instanceof
+7. == !=
+8. &
+9. ^
+10. |
+11. &&
+12. ||
+13. ?:
+14. = += -= *= /= %= &=|= ^= <<= >>= >>>=
 
 ## 3.6 Strings
 
-> Sequences of unicode characters
+sequences of unicode characters
 
 ### Substring
 
 ```java
 String greeting = "Hello";
-String s = greeting.substring(0, 3);				// The second parameter is the first position that you don't want to cope
+String s = greeting.substring(0, 3);
 ```
+
+* The second parameter is the first position that you don't want to cope
+* easy to calculate the length: b-a
 
 ### Concatenate
 
 ```java
 int age=13;
 // Use + to concatenate
-String rating = "PG"+age;					// convert to string automatically
+String rating = "PG" + age;					// convert to string automatically
 
 // Use join to concatenate
 String all = String.join(" / ", "S", "M", "L");			//return S / M / L
+
+// Use repeat to concatenate
+String repeated = "Java".repeat(3);
 ```
 
-### String Are Immutable
+### Strings Are Immutable
 
-```java
-String str = Hello;
-str[2] = 'a';						// WRONG
-```
+<u>immutable</u>: The *String* class gives no methods that let you change a character in an existing string
 
-modify the string
+* can change the contents of the string variable and make it a different string
 
-* **Concatenate** the substring with characters you want to replace
-* (Behave like pointers)
+Strings are <u>shared</u>
 
 ### Test Strings for Equality
 
 ```java
 s.equal(t);
+```
+
+* *equals* method
+
+```java
 s.equalIgnoreCase(t);
 ```
 
-== only determine whether the strings are stored in the same location
+* *equalsIgnoreCase* method
+
+== only determine whether the strings are stored <u>in the same location</u>
 
 ### Empty and Null Strings
 
-Empty: **""** is a string of length 0
+```java
+if (str.length() == 0) {}
+if (str.equals("")) {}
+```
 
-Null: **null** indicates that there is no object associated with the variable
+* *empty string*: "" (a string of length 0)
+
+```java
+if (str == null) {}
+```
+
+* *null*: there is no object associated with the variable
+
+```java
+if (str!== null && str.length()!=0)
+```
+
+* need to test that str is not null first
 
 ### Code Points and Code Units
 
-> A code point may include 1/2 code unit(s).
+char - code unit
 
-length() - code units
+code points
 
-codePointCount(0, length()) - code points
+* 1 code unit
+* 2 code units
+
+get length
+
+* *length()*:  code units
+
+* *codePointCount(0, length())*: code points
 
 ```java
-// How to traverse a string
-int[] codePoints = str.codePoints().toArray();			// get code points array
+s.charAt(i)
+```
+
+* get the *i* th code unit
+
+```java
+int index = str.offsetByCodePoints(0, i);
+int cp = str.codePointAt(index);
+```
+
+* get the *i* th code point
+
+```java
+int[] codePoints = str.codePoints().toArray();			// get code points array and traverse it
+```
+
+* traverse a string based on code point
+
+```java
 String str = new String(codePoints, 0, codePoints.length());		// constructor
 ```
 
+* turn an array of code points to a string
+
 ### The String API
 
-```java
-int compareTo(String other);
-// before negative, equal 0, after, positive
-
-IntStream codePoints();
-new String(int[], int offset, int count());
-
-boolean isEmpty();
-boolean isBlank();
-
-boolean equals(Object other);
-boolean equalsIgnoreCase(String other);
-
-boolean startsWith(String prefix);
-boolean endsWith(String suffix);
-
-int indexOf(String str);
-int indexOf(String str, int fromIndex);
-int indexOf(int cp);
-int indexOf(int cp, int fromIndex);
-int lastIndexOf...;
-
-String replace(charSequence oldString, charSequence newString);
-
-String substring(int beginIndex);
-String substring(int beginIndex, int endIndex);
-
-String toLowerCase();
-String toUpperCase();
-
-String join();
-String repeat(int count);
-```
-
 ### StringBuilder class
+
+inefficient to use string concatenation to build up strings from shorter strings
 
 ```java
 StringBuilder builder = new StringBuilder();
 builder.append(char/string);
 String completedString = builder.toString();
-
-void setCharAt(int i, char c);
-StringBuilder insert(int offset, String str);
-StringBuilder insert(int offset, char c);
-StringBuilder delete(int startIndex, int endIndex);
 ```
 
 ## 3.7 Input and Output
+
+*System.out.println*: print output
 
 ### Reading Input
 
@@ -320,25 +440,20 @@ StringBuilder delete(int startIndex, int endIndex);
 // The Scanner class is defined in the java.util package
 import java.util.*;
 
-Scanner in = new Scanner(System.In);					// construct & attach
+Scanner in = new Scanner(System.In);					// 1. construct & attach
 String name = in.nextLine();									// include spaces
-String firstName = in.next();									// a single word
-int age = in.nextInt();
-int age = in.nextDouble();
-
-// Other API
-boolean hasNext();
-boolean hasNextInt();
-boolean hasNextDouble();
 ```
+
+* *new Scanner(System.In)*: construct a *Scanner* that is attached to *System.in*
+* *nextLine()*: read a line of input
+* *next()*: read a single word
+* *nextInt()*: read a integer
+* *nextDouble()*: read a floating-point number
+* *import java.util.*: the scanner class is defined in the *java.util* package
 
 ### Formatting Output
 
-```java
-System.out.println("Hwllo, %s. Next year you'll be %d.", name, age);
-```
-
-> Each of the format specifiers that start with a **%** is **replaced** with the corresponding argument.
+each of the format specifiers that start with a <u>%</u> is <u>replaced</u> with the corresponding argument.
 
 | Conversion Type | Type                       |
 | --------------- | -------------------------- |
@@ -347,7 +462,7 @@ System.out.println("Hwllo, %s. Next year you'll be %d.", name, age);
 | e               | Exponential floating-point |
 | s               | String                     |
 
-> Specify **flags** that control the appearance of the formatted output
+Specify flags that control the appearance of the formatted output
 
 | Flag | Purpose             |
 | ---- | ------------------- |
@@ -357,35 +472,46 @@ System.out.println("Hwllo, %s. Next year you'll be %d.", name, age);
 | $    | Argument index      |
 | <    | Previous arguments  |
 
-Use the static **String.format** method to get a formatted string
+use the static *String.format* method to get a formatted string
 
 ```java
-// Date class
-System.out.println("tc", new Date());
+String message = String.format("Hello, %s.", name);
 ```
+
+java *Date* class
 
 ### File Input and Output
 
-```java
-// read
-Scanner in = new Scanner(Path.of("C:\\myDirectory\\myFile.txt"), StandardCharsets.UTF_8);
+read a file: construct a *Scanner* object:
 
-//write
+```java
+Scanner in = new Scanner(Path.of("C:\\myDirectory\\myFile.txt"), StandardCharsets.UTF_8);
+```
+
+* use the same methods as *Scanner*
+
+write a file: construct a *PrintWriter* object
+
+```java
 PrintWriter out = new PrintWriter("myFile.txt", StandardCharset.UTF_8);
 ```
+
+* use the same methods as *System.out*
 
 ## 3.8 Control Flow
 
 ### Block Scope
 
-Blocks define the scope of the variables
+block: a number of Java statement, surrounded by a pair of braces
+
+* may not declare identically named variables in two nested blockes
 
 ### Conditional Statements
 
 ```java
 if (condition) statement1 else statement2;
 
-if (condition) statement1 else if statement2;
+if (condition1) statement1 else if (condition2) statement2;
 ```
 
 ### Loops
@@ -393,7 +519,11 @@ if (condition) statement1 else if statement2;
 ```java
 while (condition) statement;
 
+// useful when you want to execute the statment at leat once
 do statement while (condition);
+
+for (int i=0; i<10; i++)
+  statement;
 ```
 
 ### Multiple Selections - The Switch Statement
@@ -413,9 +543,9 @@ switch (choice)
 
 ### Statement That Break Control Flow
 
-* **unlabeled** break statement
+* <u>unlabeled</u> break statement
 
-* **labeled** break statement
+* <u>labeled</u> break statement
 
   ```java
   read_data:						// followed by a colon, must precede the outermost loop out of
@@ -430,7 +560,7 @@ switch (choice)
   }
   ```
 
-* **continue** statement
+* *continue* statement
 
 ## 3.9 Big Numbers
 
@@ -453,7 +583,7 @@ Use methods such as add and multiply
 * ```java
   // add
   BigInteger c = a.add(b);
-
+  
   // multiply
   BigInteger d = c.multiply(b.add(BigInteger.valueOf(2)));
   ```
@@ -462,51 +592,95 @@ Use methods such as add and multiply
 
 ## 3.10 Array
 
-> Arrays hold sequences of values of the same type
->
-> Access each value through an integer index
+hold sequences of values of the same type and access each value through an integer index
 
-Declare and Initialize
+### Declare and Initialize
 
 ```java
 int[] a = new int[100];
-int[] smallPrimes = {2,3,5,7,11,13};				// shortcut, a comma is allowed
-smallPrimes = {17,19}												// reinitialize
-int[] b = new int[0]												// array of length 0
 ```
 
-* use **ArrayList** class to change its length
+* Declare an array variable by specifying the array type, followed by [] and its name
+
+  *type[] name*
+
+* use the new operator to initialize
+
+  *new type[array length]*
+
+  * the array length doesn't need to be a constant
+  * once an array is created, its length cannot be changed
+  * if you frequently need to expand the length of arrays, you should use *array lists*
+
+```java
+int[] smallPrimes = {2,3,5,7,11,13};
+String[] test = {
+  "a",
+  "b",
+  "c",
+};
+```
+
+* a shortcut for creating an array object
+* a comma after the last value is allowed
+
+```java
+smallPrimes = {17,19};
+```
+
+* you can reinitialize
+
+```java
+int[] b = new int[0]
+```
+
+* create an array of length 0
 
 ### Access Array Elements
 
-| Type      | Default value |
-| --------- | ------------- |
-| numerical | 0             |
-| boolean   | false         |
-| object    | null          |
+| Type                      | Default value |
+| ------------------------- | ------------- |
+| numerical                 | 0             |
+| boolean                   | false         |
+| object (including String) | null          |
 
-length: array.length
+* index begins with 0
+* *array.length*
 
 ### The "for each" Loop
 
 ```java
-for (variable : collection) statement					// collection: iterable
+for (variable : collection) statement;
+
+for(int elemnt: a)
+  System.out.println(element);
 ```
+
+* *collection*: array or an object of a class that implements the *Iterable* interface
 
 ### Array Copying
 
 ```java
-int[] a = b;								// both variable refer to the same array
-														// like a pointer in C++
-int[] a = Arrays.copyOf(b, b.length);
-int[] a = Arrays.copyOf(b, 2*b.length);			// used to increase the length of array
-																						// filled with default values
+int[] a = b;
 ```
+
+* You can copy one array variable into another, but both variable refer to the same array
+
+```java
+int[] a = Arrays.copyOf(b, b.length);
+int[] a = Arrays.copyOf(b, 2*b.length);
+```
+
+* use the *copyOf* method in the *Arrays* class
+* the second parameter: the length of the new array
+  * the additional elements will be filled with the default value
 
 ### Command-Line Parameters
 
 ```java
-public static void main(String[] args)
+public class Test {
+	public static void main(String[] args)
+}
 ```
 
 java test -g cruel world
@@ -519,11 +693,19 @@ java test -g cruel world
 
 ```java
 Arrays.sort(a);					// Quick Sort
-Math.random();					// [0, 1)
-int r = (int)(Math.random()*n);
 ```
 
+* use one of the *sort* methods in the *Arrays* class
+
+```java
+Math.random();
+```
+
+* return a random floating-point number belongs to [0, 1)
+
 ### Multidimensional Arrays
+
+use more than one index to access array elements
 
 ```java
 double[][] balances = new double[100][100];
