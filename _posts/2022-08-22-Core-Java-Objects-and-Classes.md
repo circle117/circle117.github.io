@@ -8,30 +8,22 @@ toc: true
 
 ## 4.1 Introduction to Object-Oriented Programming
 
-Object
-
-* functions
-* hidden implementation
-
-From
-
-* library
-* custom-designed
-
-In OOP: Data structure + Algorithms = Programs
+Object = functions + hidden implementation
 
 ### Classes and Objects
 
 **Encapsulation**: combing data and behavior in one package and hiding the implementation
 
-* data - **state**
+* data - **instance fields** - **state**
 * behavior - **methods**
 
-* Programs should interact with object data **only through its methods**
+* the <u>state</u> of an object can <u>influence</u> its <u>behavior</u>
 
-**Inheritance**: classes can be built extending other classes
+* Programs should interact with object data <u>only through its methods</u>
 
-* a cosmic superclass **Object**
+**Inheritance**: extend a class
+
+* **Object** class: all classes extend this class
 
 **Identifying class**
 
@@ -42,60 +34,68 @@ In OOP: Data structure + Algorithms = Programs
 
 **Dependence** ("use-a")
 
-* use or manipulate objects of that class
-* minimize the coupling between classes (changes to class B do not introduce bug to class A)
+* its methods <u>use or manipulate</u> objects of that class
+* minimize the *coupling* between classes (changes to class B do not introduce bug to class A)
 
 **Aggregation** ("has-a")
 
-* object of class A contains object of class B
+* object of class A <u>contains</u> object of class B
 
 **Inheritance** ("is-a")
 
-* relationship between a more specific and a more general class
+* class A <u>inherits</u> methods from class B but has more capabilities
 
 ## 4.2 Using Predefined Class
 
 ### Objects and Object Variables
 
-**Constructor**: construct and initialize objects
+construct them and specify their initial state
 
-* have the same name as the class name
-* e.g. new date()
+* **Constructor**: construct and initialize objects
+  * have the same name as the class name
+  * combine the constructor with the *new* operator
+    * e.g. new Date()
+
 
 ```java
-Date deadline = new date();
-// deadline: object variable
-// new date(): return an object variable referring to an object
-
-deadline = null;
+Date deadline;
 ```
 
-> All Java objects live on the heap.
->
-> If you use a uninitialized pointer, the runtime system will generate a runtime error.
->
-> The garbage collector takes care of memory management.
->
-> Use the clone() method to get a complete copy of an object
+* doesn't actually contain an object
 
-### LocalDate Class
+  but <u>refers</u> to an object
 
-Date class - millisecond
+* to use it
 
-LocalDate class - familiar calendar
+  * <u>initialize</u> the variable: *deadline = new Date();*
+  * refer to an <u>existing</u> object
+
+* the return value of the *new* operator is also a <u>reference</u>
+
+> * All Java objects live on the heap
+>
+> * The garbage collector takes care of memory management
+>
+> * Use the clone() method to get a complete copy of an object
+
+### *LocalDate* Class
+
+*Date* class represents a point in time
+
+*LocalDate* class represents  days in the familiar calendar notation
 
 ```java
 // initial
-LocalDate.now();
-LocalDate.of(1999,12,31);
+LocalDate date = LocalDate.now();
+date = LocalDate.of(1999,12,31);
 
 // Get
-getYear();
-getMonthValue();
-getDayOfMonth();
+int year = date.getYear();
+int month = date.getMonthValue();
+int day = date.getDayOfMonth();
 
 // Calculate
-.plusDays();
+LocalDate newDate = date.plusDays(1000);
 ```
 
 **Accessor** methods: only access objects without modifying it
@@ -116,46 +116,69 @@ class ClassName {				// Can only have one public class in one source file(.java 
 }
 ```
 
-### Dissect the Employee Class
+### Dissect the *Employee* Class
 
 **public** any method in any class can call the method
 
 **private** the methods of the class itself can access
 
-* Applying **public** to data fields ruin the encapsulation
-* Classes can contain instance fields of other class
+* Applying public to data fields <u>ruin</u> the encapsulation
+* Classes can contain instance fields of <u>class</u> type
 
 **constructor**
 
-* has the same name as the class
-* A class can have **more than one**
-* can take zero, one or more parameters
-* has **no return** value
-* is always called with the **new** operator
+* has the <u>same name</u> as the class
+* A class can have <u>more than one</u>
+* can take zero, one or more <u>parameters</u>
+* has <u>no return</u> value
+* is always called with the <u>*new*</u> operator
 
 **CAUTION**: not to introduce local variables with the same name as the instance fields (shadow)
 
-**var** can only be used with local variables inside methods
+**var**
 
-**null** if you apply a method to a null value, a NullPointerException occurs
+* can only be used with <u>local</u> variables <u>inside</u> methods
 
-* ```java
-  name = Objects.requireNonNullElse(n, "unknow");
-  ```
+**null**
 
-* ```java
-  Objects.requireNonNull(n, "The name cannot be null");
-  name = n;
-  ```
+* if you apply a method to a *null* value, a *NullPointerException* occurs
 
-**implicit and explicit parameters**
+* method to prevent null value
 
-* implicit parameters: the object of class (**this** refers to)
-* explicit parameters: inside the parenthese
+  1. ```java
+     name = Objects.requireNonNullElse(n, "unknow");
+     ```
+
+  2. ```java
+     Objects.requireNonNull(n, "The name cannot be null");
+     name = n;
+     ```
+
+**implicit parameter**
+
+* appears <u>before</u> the method name
+* e.g. number.raiseSalary(10);
+
+* the keyword *this* refers to the implicit parameter
+
+**explicit parameters**
+
+* <u>inside</u> the parentheses
+
+**field accessors**
+
+* a special case of accessor methods
+
+* get and set the value of an instance field
+  1. a private data field
+  2. a public field accessor method
+  3. a public field mutator method
 
 **Class-Based Access Privileges**: A method can access the private data of all objects of its class
 
-**Private methods**: When you want to break up the code for a computation into **separate helper methods**, you can set them private
+**Private methods**
+
+* useful when you want to <u>break up</u> the code for a computation into separate helper methods
 
 ### Final Instance Fields
 
@@ -163,22 +186,11 @@ class ClassName {				// Can only have one public class in one source file(.java 
 private final String name;
 ```
 
-* Must be initialized when the object is constructed(in the constructor). Afterwards, the field cannot be changed
+* must be <u>initialized</u> when the object is constructed
 
-* For objects, **final** only makes sure that the address is not changed, but the object still can change.
+  afterwards, the field <u>cannot</u> be changed
 
-### Benefits of Encapsulation
-
-**get and set** the value of instance fields
-
-1. A private data field
-2. A public accessor method
-3. A public mutator method
-
-**Benefits**
-
-1. change the implementation **without affecting** any code outside the class
-2. Mutator methods can perform **error checking**
+* For objects, *final* only makes sure that the <u>address</u> is not changed, but the object still can change.
 
 **CAUTION** Not to write accessor methods that return references to mutable objects, use **clone()**
 
@@ -190,7 +202,7 @@ return (Date)hireDay.clone();
 
 ### Static Fields
 
-If a field is defined as static, there is only one such field per class
+*static*: there is only one such field *per class*
 
 * belongs to class (exist before an object is declared)
 * be present even if there is no object
@@ -201,22 +213,24 @@ If a field is defined as static, there is only one such field per class
 public static final double PI = 3.14159126...;
 ```
 
-* access through Math.PI
+* access through *className.fieldName*
 * fine to be public, it cannot be changed into other values
 
 ### Static Methods
+
+methods that do not operate on objects
 
 ```java
 Math.pow(a, x);						// use the class name to call the method
 ```
 
-* has no implicit parameter
-* can access a static data field
+* has no <u>implicit</u> parameter
+* can access a <u>static</u> data field
 
-Use static methods in two situation
+Use static methods in two situations
 
-1. A method doesn't need to access the object state
-2. A method only needs to access the static field of the class
+1. A method doesn't need to access the object <u>state</u>
+2. A method only needs to access the <u>static</u> field of the class
 
 ### Factory Methods
 
@@ -240,68 +254,77 @@ Why doesn't use a constructor
 
 **call by reference** get the location
 
-method parameters in Java
+Java
 
-* cannot modify a parameter of a primitive type
-* can change the state of an object parameter
-* cannot make an object parameter refer to a new object (swap example)
+* primitive type: cannot modify
+* object type: copy the reference
+  * can change the state
+  * cannot make an object parameter refer to a new object
+
 
 ## 4.6 Object Construction
 
 ### Overload
 
-occurs if several methods have the **same name** but **different parameters**
+**overload**: several methods have the <u>same name</u> but <u>different parameters</u>
 
-A **compile-time error** occurs if the computer cannot match the parameters
+* match the parameter types in the headers of the various methods with the <u>types</u> of the values
 
 ### Constructor
 
-1. assign in the class definition
+assign in the class definition
 
-   ```java
-   class Employee
-   {
-     private String name = "";							// execute before constructors
-     private int id = assignId();					// use a method
-   }
-   ```
+* ```java
+  class Employee
+  {
+    private String name = "";							// execute before constructors
+    private int id = assignId();					// use a method
+  }
+  ```
 
-2. constructors
+constructors
 
-   default constructor: no-argument constructor (when there is no other constructors)
+* <u>default</u>: no-argument constructor (when there is no other constructors)
 
-Parameter Names
+### Parameter Names
 
 ```java
-// single-letter
-public Employee(String n, double s) {}
-// prefix "a"
-public Employee(String aName, double aSalary) {}
-// this
 public Employee(String name, double salary) {
   this.name = name;
   this.salary = salary
 }
 ```
 
-Call Another Constructor
+### Call Another Constructor
 
-```java
-public Employee(double s)
-{
-  this("Employee #"+nextId, s);
-  nextId++;
-}
-```
+use *this*
+
+* ```java
+  public Employee(double s)
+  {
+    this("Employee #"+nextId, s);
+    nextId++;
+  }
+  ```
 
 ### Initialization Blocks
 
-execute whenever an object of that class is constructed
+executed whenever an object of that class is constructed
+
+* no matter which constructor is used
+* runs first, and then the constructor
+
+executing steps
+
+1. If the constructor calls a second constructor, execute the <u>second constructor</u>
+2. All data are initialized to their <u>default</u> values
+3. All field <u>initializers</u> and initialization <u>blocks</u> are executed in the order in which they occur in the class declaration
+4. The body of the <u>constructor</u> is executed
+
+for static field
 
 ```java
-{
-  ...
-}
+private static int nextId = 1;
 
 // static initialization blocks
 static
@@ -312,11 +335,13 @@ static
 
 ### Object Destruction
 
-Java does **automatic garbage collection**, doesn't support destructors
+Java does **automatic garbage collection**
 
 For resources other than memory, use a **close()** method
 
 ## 4.7 Packages
+
+group classes in a collection called a package
 
 ### Package Name
 
@@ -326,13 +351,20 @@ An internet domain name written in reverse
 
 ### Class Importation
 
-1. **fully qualified** name
+A class can uses all classes from
+
+* its own package
+* all public classes from other packages
+
+access the public classes
+
+1. *fully qualified* name
 
    ```java
    java.time.LocalDate today = java.time.LocalDate.now();
    ```
 
-2. use the **import** statement
+2. use the *import* statement
 
    ```java
    import java.time.*;											// has no negative effect on code size
@@ -345,31 +377,40 @@ An internet domain name written in reverse
      import java.util.*;
      import java.sql.*;
      Date today;					// WRONG, both packages have Date class
-
+     
      // 1. import Date
      import java.sql.Date;
-
+     
      // 2. specify the Date while using it
+     var deadline = new java.util.Date();
      ```
 
 ### Static Import
 
-忽略所在类名/接口名
+you can use the static methods and fields of the System class <u>without the class name prefix</u>
 
 ```java
 import static java.lang.System.*;
 ```
 
-### Addition of a class into a package
+### Addition of a Class into a Package
 
-put package name at the top of the source file
+put package name at the <u>top</u> of the source file
 
 ```java
 package com.le.corejava;
 ```
 
-* If you don't put a name, the source file belongs to the **unnamed package**
+* If you don't put a name, the source file belongs to the *unnamed package*
 * Place the source file into a subdirectory that matched the full package name
 
 > If you don't specify a access modifier, the class can be accessed by all methods in the same package
+
+### Package Access
+
+public: can be used by <u>any</u> class
+
+private: can be used only by the <u>class</u> that defines them
+
+not specify: can be accessed by all methods in the same <u>package</u>
 
