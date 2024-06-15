@@ -21,11 +21,7 @@ button {
 }
 
 a:hover {
-  @apply underline text-gray-400 underline-offset-4;
-}
-
-nav {
-  @apply flex justify-around items-center my-8;
+  @apply underline text-secondary underline-offset-4;
 }
 
 button {

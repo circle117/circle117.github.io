@@ -13,7 +13,10 @@ export default function Navigator() {
   return (
     <div className="h-[10vh]">
       {width >= 1000 ? (
-        <nav id="desktop-nav">
+        <nav
+          id="desktop-nav"
+          className="items-center my-8 flex justify-between px-8"
+        >
           <p className="text-4xl">Joy Yu</p>
           <div>
             <ul className="flex gap-8 text-2xl">
@@ -33,7 +36,10 @@ export default function Navigator() {
           </div>
         </nav>
       ) : (
-        <nav id="mobile-nav">
+        <nav
+          id="mobile-nav"
+          className="items-center my-8 flex justify-between px-8"
+        >
           <p className="text-2xl">Joy Yu</p>
           <div className="relative inline-block">
             <Hamburger toggled={isOpen} onToggle={toggleMenu} />
