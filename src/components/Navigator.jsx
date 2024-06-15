@@ -38,7 +38,7 @@ export default function Navigator() {
           <div className="relative inline-block">
             <Hamburger toggled={isOpen} onToggle={toggleMenu} />
             {isOpen && (
-              <div className="absolute right-0 bg-white text-xl border border-solid border-white border-y-slate-500 p-4 justify-between">
+              <div className="absolute right-0 bg-white text-xl border-y-2 border-y-slate-500 p-4 justify-between">
                 <ul>
                   <li>
                     <a className="" href="#about" onClick={toggleMenu}>

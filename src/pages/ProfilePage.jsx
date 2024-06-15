@@ -5,8 +5,8 @@ import GithubIcon from "../components/GithubIcon";
 
 export default function ProfilePage() {
   return (
-    <div id="profile" className=" flex p-[2vh] h-[88vh] gap-32 justify-center">
-      <div className="flex rounded-full overflow-hidden h-[400px] w-[400px] self-center">
+    <div id="profile" className=" flex gap-16 h-[88vh] justify-center">
+      <div className="rounded-full overflow-hidden lg:w-[300px] md:w-[200px] place-self-center">
         <img src={profilePic} alt="Joy Yu profile picture"></img>
       </div>
       <div className="self-center justify-center text-center">

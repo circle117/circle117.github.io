@@ -7,7 +7,7 @@ export default function LinkedInIcon() {
       width="26"
       height="26"
       viewBox="0 0 192 192"
-      class="w-8 h-8"
+      className="w-8 h-8"
     >
       {
         <g
