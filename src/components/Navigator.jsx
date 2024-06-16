@@ -12,7 +12,7 @@ export default function Navigator() {
   }
   return (
     <div className="h-[10vh]">
-      {width >= 1000 ? (
+      {width >= 1200 ? (
         <nav
           id="desktop-nav"
           className="items-center my-8 flex justify-between px-8"
@@ -24,7 +24,7 @@ export default function Navigator() {
                 <a href="#about">About</a>
               </li>
               <li>
-                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
               </li>
               <li>
                 <a href="#projects">Projects</a>
@@ -55,8 +55,8 @@ export default function Navigator() {
                     </a>
                   </li>
                   <li>
-                    <a className="" href="#skills" onClick={toggleMenu}>
-                      Skills
+                    <a className="" href="#experience" onClick={toggleMenu}>
+                      Experience
                     </a>
                   </li>
                   <li>

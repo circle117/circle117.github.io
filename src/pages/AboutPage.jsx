@@ -94,7 +94,7 @@ export default function AboutPage() {
       </div>
       <div
         onClick={() => {
-          location.href = "./#skills";
+          location.href = "./#experience";
         }}
         className="cursor-pointer absolute lg:right-2 right-0.5 bottom-[4rem]"
       >

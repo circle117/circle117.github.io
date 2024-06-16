@@ -1,20 +1,21 @@
 import Skill from "../components/Skill";
+import { Link } from "react-router-dom";
 
-export default function SkillPage() {
+export default function ExperiencePage() {
   return (
     <div
-      id="skills"
+      id="experience"
       className="flex relative py-[6vh] h-[100vh] justify-center"
     >
-      <div>
-        <div className="grid content-center">
+      <div className="grid justify-around mb-4">
+        <div className="grid content-center mb-4">
           <p className="text-l mb-2 text-secondary text-center">Explore my</p>
           <p className="text-4xl text-primary font-semibold text-center">
-            Skills
+            Experience
           </p>
         </div>
-        <div className="flex gap-16 py-16 h-[75vh]">
-          <div className="border-2 rounded-2xl p-8 border-primary text-center overflow-auto">
+        <div className="flex gap-8 xl:gap-16 h-[60vh]">
+          <div className="border-2 rounded-2xl p-8 border-primary justify-center text-center overflow-auto">
             <p className="text-xl font-semibold text-primary mb-4">
               Frontend Development
             </p>
@@ -25,7 +26,7 @@ export default function SkillPage() {
               <Skill name="React" level="Basic" />
             </div>
           </div>
-          <div className="border-2 rounded-2xl p-8 border-primary text-center overflow-auto">
+          <div className="border-2 rounded-2xl p-8 border-primary justify-center text-center overflow-auto">
             <p className="text-xl font-semibold text-primary mb-4">
               Backend Development
             </p>
@@ -41,7 +42,7 @@ export default function SkillPage() {
               <Skill name="MongoDB" level="Basic" />
             </div>
           </div>
-          <div className="border-2 rounded-2xl p-8 border-primary text-center overflow-auto">
+          <div className="border-2 rounded-2xl p-8 border-primary justify-center text-center overflow-auto">
             <p className="text-xl font-semibold text-primary mb-4">
               Other Tools
             </p>
@@ -54,10 +55,18 @@ export default function SkillPage() {
             </div>
           </div>
         </div>
+        <div className="flex justify-around">
+          <p className="cursor-pointer text-2xl underline text-primary">
+            Projects
+          </p>
+          <p className="cursor-pointer text-2xl underline text-primary">
+            Interests
+          </p>
+        </div>
       </div>
       <div
         onClick={() => {
-          location.href = "./#projects";
+          location.href = "./#contact";
         }}
         className="cursor-pointer absolute lg:right-2 right-0.5 bottom-[4rem]"
       >
