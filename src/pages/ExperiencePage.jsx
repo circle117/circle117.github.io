@@ -1,11 +1,10 @@
 import Skill from "../components/Skill";
-import { Link } from "react-router-dom";
 
 export default function ExperiencePage() {
   return (
     <div
       id="experience"
-      className="flex relative py-[6vh] h-[100vh] justify-center"
+      className="flex relative lg:py-[6vh] py-[2vh] lg:h-[100vh] justify-center"
     >
       <div className="grid justify-around mb-4">
         <div className="grid content-center mb-4">
@@ -14,8 +13,8 @@ export default function ExperiencePage() {
             Experience
           </p>
         </div>
-        <div className="flex gap-8 xl:gap-16 h-[60vh]">
-          <div className="border-2 rounded-2xl p-8 border-primary justify-center text-center overflow-auto">
+        <div className="flex xl:flex-nowrap flex-wrap gap-8 xl:gap-16 xl:h-[60vh] xl:px-0 px-8">
+          <div className="border-2 rounded-2xl xl:p-8 p-4 border-primary justify-center text-center overflow-auto">
             <p className="text-xl font-semibold text-primary mb-4">
               Frontend Development
             </p>
@@ -55,7 +54,7 @@ export default function ExperiencePage() {
             </div>
           </div>
         </div>
-        <div className="flex justify-around">
+        <div className="flex justify-around mt-4">
           <p className="cursor-pointer text-2xl underline text-primary">
             Projects
           </p>
@@ -68,7 +67,7 @@ export default function ExperiencePage() {
         onClick={() => {
           location.href = "./#contact";
         }}
-        className="cursor-pointer absolute lg:right-2 right-0.5 bottom-[4rem]"
+        className="lg:flex hidden cursor-pointer absolute right-0.5 bottom-[1rem]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

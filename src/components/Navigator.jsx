@@ -41,13 +41,13 @@ export default function Navigator() {
       ) : (
         <nav
           id="mobile-nav"
-          className="items-center my-8 flex justify-between px-8"
+          className="items-center my-8 flex lg:justify-between justify-around"
         >
           <p className="text-2xl">Joy Yu</p>
           <div className="relative inline-block">
             <Hamburger toggled={isOpen} onToggle={toggleMenu} />
             {isOpen && (
-              <div className="absolute right-0 bg-white text-xl border-y-2 border-y-slate-500 p-4 justify-between">
+              <div className="absolute right-0 bg-white shadow-sm text-xl border-y-2 border-y-slate-500 p-4 justify-between">
                 <ul>
                   <li>
                     <a className="" href="#about" onClick={toggleMenu}>

@@ -7,16 +7,16 @@ export default function ProfilePage() {
   return (
     <div
       id="profile"
-      className=" flex xl:gap-48 lg:gap-32 gap-16 h-[90vh] justify-center"
+      className="lg:flex lg:justify-center grid content-center xl:gap-48 lg:gap-32 gap-8 h-[90vh]"
     >
-      <div className="rounded-full overflow-hidden lg:w-[300px] md:w-[200px] place-self-center">
+      <div className="rounded-full overflow-hidden lg:w-[300px] w-[25vh] place-self-center">
         <img src={profilePic} alt="Joy Yu profile picture"></img>
       </div>
-      <div className="self-center justify-center text-center">
+      <div className="grid content-center text-center">
         <p className="text-xl mb-4 text-gray-600">Hello, I&apos;m</p>
         <p className="text-6xl font-semibold mb-4">Joy Yu</p>
         <p className="text-4xl mb-10 text-gray-600">Software Developer</p>
-        <div className="flex justify-center mb-4 gap-2">
+        <div className="flex justify-center mb-4 gap-2 px-8">
           <button
             className="bg-primary text-sm border border-black border-solid"
             onClick={() => {

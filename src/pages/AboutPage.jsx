@@ -2,9 +2,12 @@ import aboutPic from "../assets/about_pic.jpg";
 
 export default function AboutPage() {
   return (
-    <div id="about" className="flex relative justify-center py-[6vh] h-[100vh]">
-      <div className="grid">
-        <div className="grid content-center">
+    <div
+      id="about"
+      className="flex relative justify-center lg:py-[6vh] py-[4vh] h-[100vh]"
+    >
+      <div className="grid h-[90vh]">
+        <div className="grid content-center xl:h-auto">
           <p className="text-l mb-2 text-secondary text-center">
             Get To Know More
           </p>
@@ -12,15 +15,15 @@ export default function AboutPage() {
             About Me
           </p>
         </div>
-        <div className="flex gap-4 lg:gap-8 2xl:gap-32 justify-center py-8 h-[80vh]">
-          <div className="flex my-8 rounded-2xl overflow-hidden shadow-lg">
+        <div className="lg:flex lg:justify-center lg:items-center grid content-center xl:gap-32 lg:gap-16 lg:py-8 h-[70vh]">
+          <div className="flex justify-self-center rounded-2xl overflow-hidden shadow-lg xl:h-full lg:h-[45vh] h-[24vh]">
             <img
-              className="h-full object-right object-cover"
+              className="w-full object-right object-cover"
               src={aboutPic}
               alt="Profile picture"
             />
           </div>
-          <div className="relative content-center w-2/3 h-full">
+          <div className="content-center lg:w-2/3 lg:h-full h-[46vh]">
             <div className="border-y-2 border-y-primary my-4">
               <div className="flex gap-2 text-center justify-center mt-4">
                 <svg
@@ -39,7 +42,7 @@ export default function AboutPage() {
                 </svg>
                 <p className="text-2xl font-semibold text-primary">Education</p>
               </div>
-              <div className="flex h-2/5 px-8 py-4 overflow-hidden">
+              <div className="flex justify-center h-2/5 px-8 py-4 overflow-hidden">
                 <p className="text-l">
                   Bachelor of Engineering in Computer Science and Technology @
                   Shanghai University
@@ -67,7 +70,7 @@ export default function AboutPage() {
                 with my existing knowledge to create innovative solutions.
               </p>
             </div>
-            <div className="flex px-8">
+            <div className="flex items-center px-8 xl:h-auto h-[5vh]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -96,7 +99,7 @@ export default function AboutPage() {
         onClick={() => {
           location.href = "./#experience";
         }}
-        className="cursor-pointer absolute lg:right-2 right-0.5 bottom-[4rem]"
+        className="lg:flex hidden cursor-pointer absolute right-0.5 bottom-[1rem]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
