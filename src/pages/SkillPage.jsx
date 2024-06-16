@@ -49,6 +49,8 @@ export default function SkillPage() {
               <Skill name="Git" level="Basic" />
               <Skill name="Docker" level="Basic" />
               <Skill name="Nginx" level="Basic" />
+              <Skill name="Selenium" level="Experienced" />
+              <Skill name="REST Assured" level="Basic" />
             </div>
           </div>
         </div>
