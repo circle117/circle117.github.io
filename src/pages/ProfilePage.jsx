@@ -7,7 +7,7 @@ export default function ProfilePage() {
   return (
     <div
       id="profile"
-      className=" flex xl:gap-48 lg:gap-32 gap-16 h-[88vh] justify-center"
+      className=" flex xl:gap-48 lg:gap-32 gap-16 h-[90vh] justify-center"
     >
       <div className="rounded-full overflow-hidden lg:w-[300px] md:w-[200px] place-self-center">
         <img src={profilePic} alt="Joy Yu profile picture"></img>
@@ -41,7 +41,7 @@ export default function ProfilePage() {
               location.href = "https://www.linkedin.com/in/leyu117/";
             }}
           >
-            <LinkedInIcon />
+            <LinkedInIcon size="size-8" />
           </div>
           <div
             className=" cursor-pointer"
@@ -49,7 +49,7 @@ export default function ProfilePage() {
               location.href = "https://github.com/circle117";
             }}
           >
-            <GithubIcon />
+            <GithubIcon size="size-8" />
           </div>
         </div>
       </div>

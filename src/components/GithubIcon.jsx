@@ -1,9 +1,9 @@
-export default function GithubIcon() {
+export default function GithubIcon({ size }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
-      className="w-8 h-8"
+      className={size}
     >
       <path
         fill="#81A263"

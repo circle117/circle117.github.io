@@ -1,4 +1,4 @@
-export default function LinkedInIcon() {
+export default function LinkedInIcon({ size }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +7,7 @@ export default function LinkedInIcon() {
       width="26"
       height="26"
       viewBox="0 0 192 192"
-      className="w-8 h-8"
+      className={size}
     >
       {
         <g
