@@ -24,10 +24,13 @@ export default function Navigator() {
                 <a href="#about">About</a>
               </li>
               <li>
-                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
               </li>
               <li>
                 <a href="#projects">Projects</a>
+              </li>
+              <li>
+                <a href="#interests">Interests</a>
               </li>
               <li>
                 <a href="#contact">Contact</a>
@@ -52,13 +55,18 @@ export default function Navigator() {
                     </a>
                   </li>
                   <li>
-                    <a className="" href="#experience" onClick={toggleMenu}>
-                      Experience
+                    <a className="" href="#skills" onClick={toggleMenu}>
+                      Skills
                     </a>
                   </li>
                   <li>
                     <a className="" href="#projects" onClick={toggleMenu}>
                       Projects
+                    </a>
+                  </li>
+                  <li>
+                    <a className="" href="#interests" onClick={toggleMenu}>
+                      Interests
                     </a>
                   </li>
                   <li>

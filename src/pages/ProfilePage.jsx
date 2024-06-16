@@ -9,7 +9,7 @@ export default function ProfilePage() {
       id="profile"
       className=" flex xl:gap-48 lg:gap-32 gap-16 h-[88vh] justify-center"
     >
-      <div className="rounded-full overflow-hidden lg:w-[300px] w-[200px] place-self-center">
+      <div className="rounded-full overflow-hidden lg:w-[300px] md:w-[200px] place-self-center">
         <img src={profilePic} alt="Joy Yu profile picture"></img>
       </div>
       <div className="self-center justify-center text-center">
