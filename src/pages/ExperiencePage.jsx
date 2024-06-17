@@ -1,4 +1,5 @@
 import Skill from "../components/Skill";
+import { HashLink } from "react-router-hash-link";
 
 export default function ExperiencePage() {
   return (
@@ -55,9 +56,12 @@ export default function ExperiencePage() {
           </div>
         </div>
         <div className="flex justify-around mt-4">
-          <p className="cursor-pointer text-2xl underline text-primary">
+          <HashLink
+            to={"/projects/#"}
+            className="cursor-pointer text-2xl underline text-primary"
+          >
             Projects
-          </p>
+          </HashLink>
           <p className="cursor-pointer text-2xl underline text-primary">
             Interests
           </p>

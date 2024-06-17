@@ -42,7 +42,7 @@ export default function AboutPage() {
                 </svg>
                 <p className="text-2xl font-semibold text-primary">Education</p>
               </div>
-              <div className="flex justify-center h-2/5 px-8 py-4 overflow-hidden">
+              <div className="flex justify-center gap-2 h-2/5 px-8 py-4 overflow-hidden">
                 <p className="text-l">
                   Bachelor of Engineering in Computer Science and Technology @
                   Shanghai University

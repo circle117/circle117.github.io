@@ -1,6 +1,8 @@
 import Hamburger from "hamburger-react";
 import { useState } from "react";
 import useWindowDimensions from "./WindowDimensions";
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 export default function Navigator() {
   const { width } = useWindowDimensions();
@@ -21,19 +23,19 @@ export default function Navigator() {
           <div>
             <ul className="flex gap-8 text-2xl">
               <li>
-                <a href="#about">About</a>
+                <HashLink to="/#about">About</HashLink>
               </li>
               <li>
-                <a href="#experience">Experience</a>
+                <HashLink to="/#experience">Experience</HashLink>
               </li>
               <li>
-                <a href="#projects">Projects</a>
+                <Link to={"/projects"}>Projects</Link>
               </li>
               <li>
                 <a href="#interests">Interests</a>
               </li>
               <li>
-                <a href="#contact">Contact</a>
+                <HashLink to="/#contact">Contact</HashLink>
               </li>
             </ul>
           </div>
@@ -47,32 +49,32 @@ export default function Navigator() {
           <div className="relative inline-block">
             <Hamburger toggled={isOpen} onToggle={toggleMenu} />
             {isOpen && (
-              <div className="absolute right-0 bg-white shadow-sm text-xl border-y-2 border-y-slate-500 p-4 justify-between">
+              <div className="absolute z-50 right-0 bg-white shadow-sm text-xl border-y-2 border-y-slate-500 p-4 justify-between">
                 <ul>
                   <li>
-                    <a className="" href="#about" onClick={toggleMenu}>
+                    <HashLink to="/#about" onClick={toggleMenu}>
                       About
-                    </a>
+                    </HashLink>
                   </li>
                   <li>
-                    <a className="" href="#experience" onClick={toggleMenu}>
+                    <HashLink to="/#experience" onClick={toggleMenu}>
                       Experience
-                    </a>
+                    </HashLink>
                   </li>
                   <li>
-                    <a className="" href="#projects" onClick={toggleMenu}>
+                    <Link to={"/projects"} onClick={toggleMenu}>
                       Projects
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#interests" onClick={toggleMenu}>
+                    <a href="#interests" onClick={toggleMenu}>
                       Interests
                     </a>
                   </li>
                   <li>
-                    <a className="" href="#contact" onClick={toggleMenu}>
+                    <HashLink to="/#contact" onClick={toggleMenu}>
                       Contact
-                    </a>
+                    </HashLink>
                   </li>
                 </ul>
               </div>
