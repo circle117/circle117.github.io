@@ -19,7 +19,9 @@ export default function Navigator() {
           id="desktop-nav"
           className="items-center my-8 flex justify-between px-8"
         >
-          <p className="text-4xl">Joy Yu</p>
+          <Link to={"/"}>
+            <p className="text-4xl">Joy Yu</p>
+          </Link>
           <div>
             <ul className="flex gap-8 text-2xl">
               <li>

@@ -1,8 +1,35 @@
 import TimelineItem from "../components/TimelineItem";
 
 export default function ProjectsPage() {
+  var Months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = Months[today.getMonth()]; //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = mm + " " + dd + ", " + yyyy;
+
   const timelineData = [
     {
+      type: "point",
+      text: "Today",
+      date: today,
+    },
+    {
+      type: "project",
       text: "Food Delivery Platform Backend Development",
       date: "May 2024",
       skills: "Java, Spring Boot, MySQL, Redis, RESTful API",
@@ -16,6 +43,7 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "project",
       text: "Booking Platform Full-Stack Development",
       date: "April 2024",
       skills: "MERN stack, RESTful API",
@@ -29,6 +57,7 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "project",
       text: "Automated Testing Suites Development",
       date: "March 2024",
       skills: "Java, Mavan, JUnitSelenium, REST Assured, Gatling",
@@ -42,12 +71,13 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "project",
       text: "Sharded Key/Value Service Development",
       date: "March 2024",
       skills: "Go, Raft, RPC",
       category: {
         tag: "Distributed Systems",
-        color: "#538392",
+        color: "#FFBF00",
       },
       link: {
         url: "http://nil.csail.mit.edu/6.824/2022/labs/lab-shard.html",
@@ -55,12 +85,13 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "project",
       text: "MapReduce Framework Development",
       date: "Feburary 2024",
       skills: "Go, MapReduce, RPC",
       category: {
         tag: "Distributed Systems",
-        color: "#538392",
+        color: "#FFBF00",
       },
       link: {
         url: "https://pdos.csail.mit.edu/6.824/labs/lab-mr.html",
@@ -68,6 +99,12 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "point",
+      text: "Enrolled in University of British Columbia",
+      date: "September 2023",
+    },
+    {
+      type: "project",
       text: "Web-based Course System Full-stack Development",
       date: "November 2022",
       skills: "Java, Spring, MySQL, Vue.js, Element UI",
@@ -81,6 +118,12 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "point",
+      text: "Graduated from Shanghai University",
+      date: "July 2022",
+    },
+    {
+      type: "project",
       text: "Polyimides Representation and Properties Prediction",
       date: "January - June 2022",
       skills: "Python, TensorFlow, GCN, TabNet",
@@ -94,6 +137,7 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "project",
       text: "Data Analyst Intern at Trip.com Group Ltd.",
       date: "June 2021 - Feburary 2022",
       skills: "Python, Selenium, Appium, Data Analytics",
@@ -107,6 +151,7 @@ export default function ProjectsPage() {
       },
     },
     {
+      type: "project",
       text: "ChessBoard Problem Visualization",
       date: "October 2020",
       skills: "Python, PyQt, Algorithm",
@@ -115,14 +160,21 @@ export default function ProjectsPage() {
         text: "GitHub repository",
       },
     },
+    {
+      type: "point",
+      text: "Enrolled in Shanghai University",
+      date: "September 2018",
+    },
   ];
 
   return (
     timelineData.length > 0 && (
-      <div className="timeline-container">
-        {timelineData.map((data, idx) => (
-          <TimelineItem data={data} key={idx} />
-        ))}
+      <div>
+        <div className="timeline-container">
+          {timelineData.map((data, idx) => (
+            <TimelineItem data={data} key={idx} />
+          ))}
+        </div>
       </div>
     )
   );

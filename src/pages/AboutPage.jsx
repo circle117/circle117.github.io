@@ -99,7 +99,7 @@ export default function AboutPage() {
         onClick={() => {
           location.href = "./#experience";
         }}
-        className="lg:flex hidden cursor-pointer absolute right-0.5 bottom-[1rem]"
+        className="lg:flex hidden lg:cursor-pointer absolute right-0.5 bottom-[1rem]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
