@@ -1,6 +1,6 @@
 import ProfilePage from "./ProfilePage";
 import AboutPage from "./AboutPage";
-import ExperiencePage from "./ExperiencePage";
+import SkillsPage from "./SkillsPage";
 import ContactPage from "./ContactPage";
 
 export default function HomePage() {
@@ -8,7 +8,7 @@ export default function HomePage() {
     <div>
       <ProfilePage />
       <AboutPage />
-      <ExperiencePage />
+      <SkillsPage />
       <ContactPage />
     </div>
   );

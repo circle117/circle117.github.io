@@ -28,13 +28,13 @@ export default function Navigator() {
                 <HashLink to="/#about">About</HashLink>
               </li>
               <li>
-                <HashLink to="/#experience">Experience</HashLink>
+                <HashLink to="/#skills">Skills</HashLink>
               </li>
               <li>
-                <Link to={"/projects"}>Projects</Link>
+                <Link to={"/experience"}>Experience</Link>
               </li>
               <li>
-                <a href="#interests">Interests</a>
+                <Link to={"/interests"}>Interests</Link>
               </li>
               <li>
                 <HashLink to="/#contact">Contact</HashLink>
@@ -59,19 +59,19 @@ export default function Navigator() {
                     </HashLink>
                   </li>
                   <li>
-                    <HashLink to="/#experience" onClick={toggleMenu}>
-                      Experience
+                    <HashLink to="/#skills" onClick={toggleMenu}>
+                      Skills
                     </HashLink>
                   </li>
                   <li>
-                    <Link to={"/projects"} onClick={toggleMenu}>
-                      Projects
+                    <Link to={"/experience"} onClick={toggleMenu}>
+                      Experience
                     </Link>
                   </li>
                   <li>
-                    <a href="#interests" onClick={toggleMenu}>
+                    <Link to={"/interests"} onClick={toggleMenu}>
                       Interests
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <HashLink to="/#contact" onClick={toggleMenu}>

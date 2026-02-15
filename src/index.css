@@ -69,6 +69,7 @@ body {
   left: calc(50% - 2px);
   width: 4px;
   height: 100%;
+  z-index: 0;
 }
 
 .timeline-item {
@@ -78,6 +79,7 @@ body {
   position: relative;
   margin: 10px 0;
   width: 50%;
+  z-index: 1;
 }
 
 .timeline-item:nth-child(odd) {

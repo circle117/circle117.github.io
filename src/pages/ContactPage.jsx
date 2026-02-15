@@ -4,14 +4,13 @@ export default function ContactPage() {
   return (
     <div
       id="contact"
-      className="flex relative py-[6vh] lg:h-[90vh] justify-center items-center"
+      className="min-h-screen flex items-center justify-center py-20 px-4"
     >
-      <div>
-        <div className="grid content-center mb-8">
-          <p className="text-l mb-2 text-secondary text-center">Get in Touch</p>
-          <p className="text-4xl text-primary font-semibold text-center">
-            Contact Me
-          </p>
+      <div className="w-full max-w-3xl text-center">
+        {/* title */}
+        <div className="mb-10">
+          <p className="text-l mb-2 text-secondary">Get in Touch</p>
+          <p className="text-4xl text-primary font-semibold">Contact Me</p>
         </div>
         <div className="flex border-2 xl:p-4 p-2 px-8 gap-4 rounded-full border-primary justify-center text-center">
           <div className="flex gap-1 items-center">
