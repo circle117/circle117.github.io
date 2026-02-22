@@ -13,7 +13,7 @@ export default function InterestsPage() {
     },
     {
       title: "Climbing",
-      desc: "Indoor bouldering challenges both my physical strength and problem-solving mindset.",
+      desc: "Indoor climbing challenges both my physical strength and problem-solving mindset.",
       img: climbingImg,
       emoji: "🧗",
       since: "Oct. 2024",
@@ -55,12 +55,14 @@ export default function InterestsPage() {
             >
               {/* image */}
               {item.img ? (
-                <img
-                  src={item.img}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                  loading="lazy"
-                />
+                <div className="w-full aspect-[3/4] overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
               ) : null}
 
               {/* content */}
